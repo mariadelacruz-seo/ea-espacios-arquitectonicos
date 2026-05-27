@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog · EA – Espacios Arquitectónicos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --night:#0D1A35;
+      --gold:#C9A96E;
+      --gold-light:#E2C896;
+      --cream:#F8F5EF;
+      --stone:#8B8680;
+      --warm:#F2EDE5;
+      --ff-serif:'Cormorant Garamond',Georgia,serif;
+      --ff-sans:'Jost',sans-serif;
+      --r:4px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-sans);background:var(--cream);color:var(--night);overflow-x:hidden}
+    img{display:block;max-width:100%;height:auto}
+    a{text-decoration:none;color:inherit}
+
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--night)}
+    ::-webkit-scrollbar-thumb{background:var(--gold)}
+
+    /* ── NAV ────────────────────────────────────────── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:0 5%;height:72px;
+      background:var(--night);box-shadow:0 2px 20px rgba(0,0,0,.3);
+    }
+    .nav-logo{display:flex;flex-direction:column;gap:2px}
+    .nav-logo a{font-family:var(--ff-serif);font-size:1.35rem;font-weight:500;color:var(--cream)}
+    .nav-logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .3s}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+    .nav-cta{
+      font-size:10px;letter-spacing:2px;text-transform:uppercase;
+      border:1px solid var(--gold);color:var(--gold);
+      padding:.55rem 1.25rem;border-radius:var(--r);
+      transition:background .3s,color .3s;cursor:pointer;
+    }
+    .nav-cta:hover{background:var(--gold);color:var(--night)}
+
+    /* ── PAGE HEADER ────────────────────────────────– */
+    .page-header{
+      padding-top:120px;padding-bottom:4rem;background:var(--night);text-align:center;color:var(--cream);
+      border-bottom:1px solid rgba(201,169,110,.2);
+    }
+    .page-header h1{
+      font-family:var(--ff-serif);font-size:clamp(2rem,5vw,3.5rem);
+      font-weight:300;margin-bottom:.5rem;
+    }
+    .page-header p{
+      font-size:.95rem;color:rgba(248,245,239,.6);max-width:700px;margin:0 auto;
+    }
+
+    /* ── BLOG CONTAINER ────────────────────────────– */
+    .blog-container{
+      padding:6rem 5%;max-width:1200px;margin:0 auto;
+    }
+
+    /* ── FEATURED POST ────────────────────────────– */
+    .featured-post{
+      display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+      align-items:center;margin-bottom:6rem;
+    }
+    .featured-image{
+      width:100%;height:400px;border-radius:var(--r);overflow:hidden;
+    }
+    .featured-image img{width:100%;height:100%;object-fit:cover}
+    .featured-content h2{
+      font-family:var(--ff-serif);font-size:2.5rem;font-weight:300;
+      margin-bottom:1rem;color:var(--night);
+    }
+    .featured-meta{
+      display:flex;gap:2rem;align-items:center;margin-bottom:1.5rem;
+      font-size:.85rem;color:var(--stone);
+    }
+    .featured-category{
+      background:var(--gold);color:var(--night);
+      padding:.35rem .75rem;border-radius:4px;font-weight:500;
+      font-size:.75rem;letter-spacing:1px;text-transform:uppercase;
+    }
+    .featured-excerpt{
+      font-size:.95rem;color:var(--stone);line-height:1.8;
+      margin-bottom:1.5rem;
+    }
+    .btn-read{
+      display:inline-block;
+      color:var(--gold);font-weight:500;letter-spacing:1px;
+      text-transform:uppercase;font-size:.85rem;
+      transition:color .3s;
+    }
+    .btn-read:hover{color:var(--gold-light)}
+
+    /* ── BLOG GRID ────────────────────────────────– */
+    .blog-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;
+      margin-bottom:4rem;
+    }
+    .blog-card{
+      background:white;border:1px solid var(--border);border-radius:var(--r);
+      overflow:hidden;transition:all .3s;
+      display:flex;flex-direction:column;
+    }
+    .blog-card:hover{
+      box-shadow:0 8px 30px rgba(13,26,53,.1);
+      border-color:var(--gold);
+    }
+    .blog-image{
+      width:100%;height:220px;overflow:hidden;background:var(--warm);
+    }
+    .blog-image img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+    .blog-card:hover .blog-image img{transform:scale(1.05)}
+    .blog-content{
+      padding:2rem;flex:1;display:flex;flex-direction:column;
+    }
+    .blog-category{
+      display:inline-block;
+      background:rgba(201,169,110,.1);color:var(--gold);
+      padding:.35rem .75rem;border-radius:4px;font-weight:500;
+      font-size:.7rem;letter-spacing:1px;text-transform:uppercase;
+      margin-bottom:1rem;width:fit-content;
+    }
+    .blog-title{
+      font-family:var(--ff-serif);font-size:1.35rem;font-weight:400;
+      color:var(--night);margin-bottom:.75rem;line-height:1.3;
+    }
+    .blog-date{
+      font-size:.85rem;color:var(--stone);margin-bottom:1rem;
+    }
+    .blog-excerpt{
+      font-size:.9rem;color:var(--stone);line-height:1.7;
+      margin-bottom:auto;padding-bottom:1rem;border-bottom:1px solid var(--border);
+    }
+    .blog-meta{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-top:1rem;font-size:.85rem;color:var(--gold);
+    }
+    .blog-meta a{transition:color .3s;cursor:pointer}
+    .blog-meta a:hover{color:var(--gold-light)}
+
+    /* ── SIDEBAR ────────────────────────────────── */
+    .blog-with-sidebar{
+      display:grid;grid-template-columns:2fr 1fr;gap:3rem;
+    }
+
+    /* ── SIDEBAR SECTION ────────────────────────– */
+    .sidebar-section{
+      background:var(--warm);padding:2rem;border-radius:var(--r);margin-bottom:2rem;
+    }
+    .sidebar-title{
+      font-family:var(--ff-serif);font-size:1.2rem;font-weight:400;
+      color:var(--night);margin-bottom:1.5rem;padding-bottom:1rem;
+      border-bottom:1px solid rgba(13,26,53,.1);
+    }
+    .sidebar-item{
+      margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(13,26,53,.05);
+    }
+    .sidebar-item:last-child{border-bottom:none}
+    .sidebar-item a{
+      display:block;color:var(--night);font-size:.9rem;
+      transition:color .3s;line-height:1.5;
+    }
+    .sidebar-item a:hover{color:var(--gold)}
+    .sidebar-date{
+      font-size:.75rem;color:var(--stone);display:block;margin-top:.25rem;
+    }
+
+    /* ── FADE ANIMATIONS ────────────────────────– */
+    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s, transform .7s}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+
+    /* ── FOOTER ────────────────────────────────– */
+    footer{background:var(--night);border-top:1px solid rgba(201,169,110,.2);padding:4rem 5%;color:var(--cream)}
+    footer a{color:var(--cream);transition:color .3s}
+    footer a:hover{color:var(--gold)}
+
+    /* ── RESPONSIVE ────────────────────────────– */
+    @media(max-width:968px){
+      .blog-grid{grid-template-columns:repeat(2,1fr)}
+      .featured-post{grid-template-columns:1fr}
+      .blog-with-sidebar{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .blog-grid{grid-template-columns:1fr}
+      .page-header{padding-top:100px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html" style="font-family:var(--ff-serif);font-size:1.35rem;font-weight:500;color:var(--cream)">EA</a>
+    <div class="nav-logo-sub">Espacios</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="planos.html">Planos Predefinidos</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Contacto</a>
+</nav>
+
+<!-- ══════════════════ PAGE HEADER ══════════════════ -->
+<div class="page-header">
+  <h1>Blog EA</h1>
+  <p>Consejos, tendencias y reflexiones sobre arquitectura, diseño de casas campestres y construcción de viviendas a medida.</p>
+</div>
+
+<!-- ══════════════════ BLOG CONTAINER ══════════════════ -->
+<div class="blog-container">
+  <!-- FEATURED POST -->
+  <div class="featured-post fade-up">
+    <div class="featured-image">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Diseño de casas campestres"/>
+    </div>
+    <div class="featured-content">
+      <h2>La arquitectura campestre como respuesta</h2>
+      <div class="featured-meta">
+        <span class="featured-category">Arquitectura</span>
+        <span>15 mayo, 2026</span>
+        <span>Lectura 8 min</span>
+      </div>
+      <p class="featured-excerpt">Cuando hablamos de arquitectura campestre, no hablamos solo de casas en el campo. Hablamos de una forma de pensar el espacio que reconoce al lugar como protagonista. Te contamos cómo abordamos cada proyecto desde la escucha, la lectura del terreno y la búsqueda de soluciones honestas.</p>
+      <a href="#" class="btn-read">Leer artículo completo →</a>
+    </div>
+  </div>
+
+  <!-- BLOG WITH SIDEBAR -->
+  <div class="blog-with-sidebar">
+    <!-- POSTS GRID -->
+    <div class="blog-grid">
+      <!-- Post 1 -->
+      <div class="blog-card fade-up">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1600566753086-00541fbb91e7?w=400&q=80" alt="Topografía y diseño"/>
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Diseño</span>
+          <h3 class="blog-title">La topografía como aliada de diseño</h3>
+          <div class="blog-date">12 mayo, 2026 · 6 min de lectura</div>
+          <p class="blog-excerpt">Muchos ven la pendiente como un problema. Nosotros la vemos como una oportunidad. Descubre cómo convertimos las limitaciones del terreno en las fortalezas de tu proyecto.</p>
+          <div class="blog-meta">
+            <a href="#">Leer más →</a>
+            <span>Comparte</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 2 -->
+      <div class="blog-card fade-up" style="transition-delay:.1s">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1600607687644-c173cecb4a75?w=400&q=80" alt="Climatización pasiva"/>
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Construcción</span>
+          <h3 class="blog-title">Climatización pasiva en clima tropical</h3>
+          <div class="blog-date">8 mayo, 2026 · 7 min de lectura</div>
+          <p class="blog-excerpt">¿Sabías que antes del aire acondicionado, la arquitectura resolvía el clima con inteligencia? Exploramos técnicas ancestrales adaptadas a la contemporaneidad.</p>
+          <div class="blog-meta">
+            <a href="#">Leer más →</a>
+            <span>Comparte</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 3 -->
+      <div class="blog-card fade-up" style="transition-delay:.2s">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=400&q=80" alt="Materiales locales"/>
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Sostenibilidad</span>
+          <h3 class="blog-title">Materiales locales, impacto global</h3>
+          <div class="blog-date">5 mayo, 2026 · 5 min de lectura</div>
+          <p class="blog-excerpt">¿Por qué importan los materiales que usamos en construcción? Hablamos sobre cómo elegir con criterio, pensando en durabilidad y respeto ambiental.</p>
+          <div class="blog-meta">
+            <a href="#">Leer más →</a>
+            <span>Comparte</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 4 -->
+      <div class="blog-card fade-up" style="transition-delay:.3s">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&q=80" alt="BIM en construcción"/>
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Tecnología</span>
+          <h3 class="blog-title">¿Por qué usamos BIM en nuestros proyectos?</h3>
+          <div class="blog-date">1 mayo, 2026 · 8 min de lectura</div>
+          <p class="blog-excerpt">El modelado BIM no es solo tecnología. Es una forma de pensar la construcción, anticipar conflictos y garantizar que lo que viste en el plano sea exactamente lo que construimos.</p>
+          <div class="blog-meta">
+            <a href="#">Leer más →</a>
+            <span>Comparte</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 5 -->
+      <div class="blog-card fade-up" style="transition-delay:.4s">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1600566750355-35792bedcfea?w=400&q=80" alt="Espacios de transición"/>
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Arquitectura</span>
+          <h3 class="blog-title">La importancia de los espacios de transición</h3>
+          <div class="blog-date">28 abril, 2026 · 6 min de lectura</div>
+          <p class="blog-excerpt">Entre el adentro y el afuera existe un espacio mágico. Descubre cómo los espacios de transición transforman la experiencia de habitar una casa campestre.</p>
+          <div class="blog-meta">
+            <a href="#">Leer más →</a>
+            <span>Comparte</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 6 -->
+      <div class="blog-card fade-up" style="transition-delay:.5s">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1600566750355-35792bedcfea?w=400&q=80" alt="Presupuesto de obra"/>
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Presupuesto</span>
+          <h3 class="blog-title">Cómo presupuestar correctamente tu obra</h3>
+          <div class="blog-date">25 abril, 2026 · 9 min de lectura</div>
+          <p class="blog-excerpt">Un presupuesto bien hecho es tu mejor aliado. Te enseñamos cómo leer un presupuesto de construcción y qué preguntas hacer para no sorpresas.</p>
+          <div class="blog-meta">
+            <a href="#">Leer más →</a>
+            <span>Comparte</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+      <!-- CATEGORIES -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Categorías</h3>
+        <div class="sidebar-item">
+          <a href="#">Arquitectura</a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">Diseño</a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">Construcción</a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">Sostenibilidad</a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">Tecnología</a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">Presupuesto</a>
+        </div>
+      </div>
+
+      <!-- RECENT POSTS -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Publicaciones Recientes</h3>
+        <div class="sidebar-item">
+          <a href="#">La arquitectura campestre como respuesta</a>
+          <span class="sidebar-date">15 mayo, 2026</span>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">La topografía como aliada de diseño</a>
+          <span class="sidebar-date">12 mayo, 2026</span>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">Climatización pasiva en clima tropical</a>
+          <span class="sidebar-date">8 mayo, 2026</span>
+        </div>
+        <div class="sidebar-item">
+          <a href="#">Materiales locales, impacto global</a>
+          <span class="sidebar-date">5 mayo, 2026</span>
+        </div>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div class="sidebar-section" style="background:var(--night);color:var(--cream);border:1px solid rgba(201,169,110,.2)">
+        <h3 class="sidebar-title" style="color:var(--cream);border-bottom-color:rgba(201,169,110,.2)">Newsletter</h3>
+        <p style="font-size:.9rem;color:rgba(248,245,239,.7);margin-bottom:1.5rem">Recibe nuestros mejores artículos sobre arquitectura y construcción directamente en tu inbox.</p>
+        <input type="email" placeholder="tu@correo.com" style="width:100%;padding:.75rem;border:1px solid rgba(201,169,110,.2);background:rgba(255,255,255,.05);color:var(--cream);border-radius:var(--r);margin-bottom:1rem"/>
+        <button style="width:100%;background:var(--gold);color:var(--night);padding:.75rem;border:none;border-radius:var(--r);font-weight:500;cursor:pointer;text-transform:uppercase;font-size:.85rem;letter-spacing:1px;transition:.3s"
+          onmouseover="this.style.background='var(--gold-light)'" onmouseout="this.style.background='var(--gold)'">Suscribirse</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;margin-bottom:3rem;max-width:1400px;margin-left:auto;margin-right:auto;padding:4rem 5%">
+    <div>
+      <div style="font-family:var(--ff-serif);font-size:1.3rem;margin-bottom:.5rem;color:var(--cream)">EA – Espacios Arquitectónicos</div>
+      <div style="font-size:.9rem;color:var(--gold);margin-bottom:1rem;letter-spacing:2px;text-transform:uppercase">Diseño. Construcción. Control.</div>
+      <p style="font-size:.85rem;color:rgba(248,245,239,.6);line-height:1.7">Oficina de diseño y construcción de vivienda campestre con sede en Medellín.</p>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Sitio</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="index.html" style="color:var(--cream)">Inicio</a></li>
+        <li style="margin-bottom:.75rem"><a href="proyectos.html" style="color:var(--cream)">Proyectos</a></li>
+        <li style="margin-bottom:.75rem"><a href="planos.html" style="color:var(--cream)">Planos Predefinidos</a></li>
+        <li style="margin-bottom:.75rem"><a href="blog.html" style="color:var(--cream)">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Contacto</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="mailto:contacto@espaciosarquitectonicos.com.co" style="color:var(--cream)">contacto@espaciosarquitectonicos.com.co</a></li>
+        <li style="margin-bottom:.75rem"><a href="tel:+573003204489" style="color:var(--cream)">+57 300 320 4489</a></li>
+        <li style="margin-bottom:.75rem;color:var(--cream)">Medellín, Antioquia</li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Síguenos</p>
+      <ul style="list-style:none;display:flex;gap:1rem">
+        <li><a href="#" style="color:var(--cream)">Instagram</a></li>
+        <li><a href="#" style="color:var(--cream)">LinkedIn</a></li>
+        <li><a href="#" style="color:var(--cream)">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(201,169,110,.15);padding-top:2rem;text-align:center;font-size:.85rem;color:rgba(248,245,239,.5);padding:2rem 5%">
+    <p>© 2026 EA – Espacios Arquitectónicos. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- ══════════════════ JS ══════════════════ -->
+<script>
+// Fade-up on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.12});
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

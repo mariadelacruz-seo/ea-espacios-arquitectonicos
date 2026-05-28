@@ -17,9 +17,7 @@
     .nav-links a{color:#fff;text-decoration:none;font-size:12px;text-transform:uppercase;letter-spacing:2px}
     .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 20px;cursor:pointer;border-radius:4px}
     #hero{position:relative;height:100vh;display:flex;align-items:flex-end;overflow:hidden}
-    .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s}
-    .hero-slide.active{opacity:1}
-    .hero-slide img{width:100%;height:100%;object-fit:cover}
+    #hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
     .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,26,53,0.92) 0%,transparent 100%);z-index:2}
     .hero-content{position:relative;z-index:3;padding:0 5% 8%;max-width:900px}
     .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--cream);margin-bottom:20px}
@@ -31,61 +29,13 @@
     .sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1rem}
     h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem}
     .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:2rem}
-    .about-video{width:100%;height:400px;background:var(--warm);border-radius:4px;overflow:hidden}
-    video{width:100%;height:100%;object-fit:cover}
-    p{line-height:1.8;margin-bottom:1rem;color:rgba(13,26,53,0.8)}
-    .project-detail{margin-top:3rem;padding-top:3rem;border-top:1px solid rgba(196,160,70,0.2)}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:2rem}
-    .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;transition:transform 0.3s}
-    .gallery img:hover{transform:scale(1.05)}
-    .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:2rem}
-    .pillar{text-align:center}
-    .pillar h4{margin-bottom:1rem}
-    #contact{background:var(--night)}
-    #contact h2,#contact .sec-title{color:var(--cream)}
-    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2rem}
-    .contact-info{color:var(--cream)}
-    .contact-info div{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:center}
-    .contact-form{background:rgba(248,245,239,0.05);padding:2rem;border-radius:4px;border:1px solid rgba(196,160,70,0.2)}
-    input,select,textarea{width:100%;padding:10px;margin-bottom:1rem;background:rgba(255,255,255,0.08);border:1px solid rgba(196,160,70,0.2);color:var(--cream);border-radius:4px;font-family:inherit}
-    footer{background:var(--night);padding:3rem 5%;border-top:1px solid
-
-cat > ~/Documents/EA/index.html << 'FINAL'
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EA – Espacios Arquitectónicos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{--night:#0D1A35;--gold:#C4A046;--cream:#F8F5EF;--warm:#F2EDE5}
-    body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--night)}
-    nav{position:fixed;top:0;left:0;right:0;background:var(--night);z-index:100;padding:0 5%;height:72px;display:flex;justify-content:space-between;align-items:center}
-    .nav-logo img{height:50px}
-    .nav-links{display:flex;gap:2rem;list-style:none}
-    .nav-links a{color:#fff;text-decoration:none;font-size:12px;text-transform:uppercase;letter-spacing:2px}
-    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 20px;cursor:pointer;border-radius:4px}
-    #hero{position:relative;height:100vh;display:flex;align-items:flex-end;overflow:hidden}
-    .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s}
-    .hero-slide.active{opacity:1}
-    .hero-slide img{width:100%;height:100%;object-fit:cover}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,26,53,0.92) 0%,transparent 100%);z-index:2}
-    .hero-content{position:relative;z-index:3;padding:0 5% 8%;max-width:900px}
-    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--cream);margin-bottom:20px}
-    .hero-sub{color:rgba(248,245,239,.7);font-size:1rem;margin-bottom:30px}
-    .btn{padding:12px 30px;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-block;margin-right:15px}
-    .btn-primary{background:var(--gold);color:var(--night)}
-    .btn-ghost{background:transparent;border:1px solid rgba(248,245,239,0.4);color:var(--cream)}
-    section{padding:6rem 5%}
-    .sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1rem}
-    h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:2rem}
-    .about-video{width:100%;height:400px;background:var(--warm);border-radius:4px;overflow:hidden}
-    video{width:100%;height:100%;object-fit:cover}
+    .slider-container{position:relative;width:100%;height:400px;background:var(--warm);border-radius:4px;overflow:hidden}
+    .slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s}
+    .slide.active{opacity:1}
+    .slide img{width:100%;height:100%;object-fit:cover}
+    .slider-nav{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:0.5rem}
+    .dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer}
+    .dot.active{background:var(--gold)}
     p{line-height:1.8;margin-bottom:1rem;color:rgba(13,26,53,0.8)}
     .project-detail{margin-top:3rem;padding-top:3rem;border-top:1px solid rgba(196,160,70,0.2)}
     .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:2rem}
@@ -124,13 +74,9 @@ cat > ~/Documents/EA/index.html << 'FINAL'
 </nav>
 
 <section id="inicio" id="hero">
-  <div class="hero-slide active"><img src="./images/Casa-el-refugio-01.png" alt=""></div>
-  <div class="hero-slide"><img src="./images/Casa-en-el-bosque-02.png" alt=""></div>
-  <div class="hero-slide"><img src="./images/Casa-en-la-ladera-02.png" alt=""></div>
-  <div class="hero-slide"><img src="./images/Casa-JT-01.png" alt=""></div>
-  <div class="hero-slide"><img src="./images/Casa-MT-01.png" alt=""></div>
-  <div class="hero-slide"><img src="./images/Casa-San-Cristobal-01.png" alt=""></div>
-  <div class="hero-slide"><img src="./images/Casa-SP-01.png" alt=""></div>
+  <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <source src="./videos/Video-comprimido.mp4" type="video/mp4">
+  </video>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-h1">EA – Espacios Arquitectónicos</h1>
@@ -147,9 +93,25 @@ cat > ~/Documents/EA/index.html << 'FINAL'
     <div>
       <h3>Un equipo que te acompaña a construir tus sueños</h3>
       <p>EA – Espacios Arquitectónicos es una oficina de diseño y construcción de vivienda campestre con sede en Medellín y más de 20 años de experiencia.</p>
+      <p>Nos especializamos en casas a medida: proyectos que parten de escuchar a quien va a habitar el espacio, leer lugar y diseñar una respuesta con carácter propio.</p>
     </div>
-    <div class="about-video">
-      <video controls><source src="./videos/Video-comprimido.mp4" type="video/mp4"></video>
+    <div class="slider-container">
+      <div class="slide active"><img src="./images/Casa-el-refugio-01.png" alt=""></div>
+      <div class="slide"><img src="./images/Casa-en-el-bosque-02.png" alt=""></div>
+      <div class="slide"><img src="./images/Casa-en-la-ladera-02.png" alt=""></div>
+      <div class="slide"><img src="./images/Casa-JT-01.png" alt=""></div>
+      <div class="slide"><img src="./images/Casa-MT-01.png" alt=""></div>
+      <div class="slide"><img src="./images/Casa-San-Cristobal-01.png" alt=""></div>
+      <div class="slide"><img src="./images/Casa-SP-01.png" alt=""></div>
+      <div class="slider-nav">
+        <div class="dot active" onclick="goToSlide(0)"></div>
+        <div class="dot" onclick="goToSlide(1)"></div>
+        <div class="dot" onclick="goToSlide(2)"></div>
+        <div class="dot" onclick="goToSlide(3)"></div>
+        <div class="dot" onclick="goToSlide(4)"></div>
+        <div class="dot" onclick="goToSlide(5)"></div>
+        <div class="dot" onclick="goToSlide(6)"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -214,13 +176,11 @@ cat > ~/Documents/EA/index.html << 'FINAL'
   <div class="contact-grid">
     <div class="contact-info">
       <div><span>📍</span><span>Medellín, Antioquia</span></div>
-      <div><span>📧</span><a href="mailto:contacto@espaciosarquitectonicos.com.co" style="color:var(--gold)">Email</a></div>
+      <div><span>📧</span><a href="mailto:contacto@espaciosarquitectonicos.com.co" style="color:var(--gold)">contacto@espaciosarquitectonicos.com.co</a></div>
       <div><span>📱</span><a href="tel:+573003204489" style="color:var(--gold)">+57 300 320 4489</a></div>
     </div>
     <div class="contact-form">
-      <input type="text" placeholder="Nombre"/>
-      <input type="email" placeholder="tu@correo.com"/>
-      <textarea placeholder="Tu mensaje..." style="min-height:100px"></textarea>
+      <input type="text" placeholder="Nombre"/><input type="email" placeholder="tu@correo.com"/><textarea placeholder="Tu mensaje..." style="min-height:100px"></textarea>
       <button class="btn btn-primary" onclick="alert('Gracias')">Enviar</button>
     </div>
   </div>
@@ -229,19 +189,30 @@ cat > ~/Documents/EA/index.html << 'FINAL'
 <footer>
   <div class="footer-grid">
     <div><h4 style="color:var(--gold)">EA</h4><p>Diseño. Construcción. Control.</p></div>
-    <div><h4 style="color:var(--gold)">Links</h4><a href="/" style="color:rgba(248,245,239,.7);display:block">Inicio</a></div>
-    <div></div>
-    <div></div>
+    <div></div><div></div><div></div>
   </div>
 </footer>
 
 <script>
-const slides = document.querySelectorAll('.hero-slide');
-let current = 0;
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(n) {
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  slides[n].classList.add('active');
+  dots[n].classList.add('active');
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  showSlide(currentSlide);
+}
+
 setInterval(() => {
-  slides[current].classList.remove('active');
-  current = (current + 1) % slides.length;
-  slides[current].classList.add('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
 }, 5000);
 </script>
 

@@ -11,10 +11,65 @@
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--night:#0D1A35;--gold:#C4A046;--cream:#F8F5EF;--warm:#F2EDE5}
     body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--night)}
-    nav{position:fixed;top:0;left:0;right:0;background:var(--night);z-index:100;padding:0 5%;height:80px;display:flex;justify-content:space-between;align-items:center}
-    .nav-logo img{height:70px;width:
+    nav{position:fixed;top:0;left:0;right:0;background:var(--night);z-index:100;padding:0 5%;height:80px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+    .nav-logo img{height:70px;width:auto}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:2px;text-decoration:none;transition:color 0.3s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 20px;cursor:pointer;border-radius:4px;transition:all 0.3s}
+    .nav-cta:hover{background:var(--gold);color:var(--night)}
+    #hero{position:relative;height:100vh;display:flex;align-items:flex-end;overflow:hidden}
+    #heroVideo{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1}
+    #hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to top,rgba(13,26,53,0.92),transparent);z-index:2}
+    .hero-content{position:relative;z-index:3;padding:0 5% 8%;max-width:900px}
+    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--cream);margin-bottom:20px;font-weight:400}
+    .hero-sub{color:rgba(248,245,239,.8);font-size:1.1rem;margin-bottom:30px;font-weight:300}
+    .hero-buttons{display:flex;gap:15px;flex-wrap:wrap}
+    .btn{padding:12px 30px;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-block;font-size:12px;text-transform:uppercase;letter-spacing:2px;transition:all 0.3s}
+    .btn-primary{background:var(--gold);color:var(--night);font-weight:500}
+    .btn-primary:hover{background:#d4b876;transform:translateY(-2px)}
+    .btn-ghost{background:transparent;border:1px solid rgba(248,245,239,0.5);color:var(--cream)}
+    .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+    section{padding:6rem 5%}
+    h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:2rem;font-weight:400}
+    h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem;font-weight:400}
+    p{line-height:1.8;margin-bottom:1.5rem;color:rgba(13,26,53,0.8)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:2rem}
+    .slider-container{position:relative;width:100%;height:400px;background:var(--warm);border-radius:4px;overflow:hidden}
+    .slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease-in-out}
+    .slide.active{opacity:1}
+    .slide img{width:100%;height:100%;object-fit:cover}
+    .slider-nav{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:0.5rem}
+    .dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s}
+    .dot:hover{background:rgba(255,255,255,0.7)}
+    .dot.active{background:var(--gold)}
+    .project-detail{margin-top:3rem;padding-top:3rem;border-top:1px solid rgba(196,160,70,0.2)}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:2rem}
+    .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;transition:transform 0.3s}
+    .gallery img:hover{transform:scale(1.05)}
+    .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:2rem}
+    .pillar{text-align:center}
+    .pillar h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:1rem}
+    .pillar p{font-size:0.9rem}
+    #contact{background:var(--night)}
+    #contact h2{color:var(--cream)}
+    #contact p{color:rgba(248,245,239,0.8)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2rem}
+    .contact-info{color:var(--cream)}
+    .contact-info div{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start}
+    .contact-info a{color:var(--gold);text-decoration:none}
+    .contact-form{background:rgba(248,245,239,0.05);padding:2rem;border-radius:4px;border:1px solid rgba(196,160,70,0.2)}
+    input,select,textarea{width:100%;padding:12px;margin-bottom:1rem;background:rgba(255,255,255,0.08);border:1px solid rgba(196,160,70,0.2);color:var(--cream);border-radius:4px;font-family:inherit;font-size:1rem}
+    input::placeholder,textarea::placeholder{color:rgba(248,245,239,0.5)}
+    .contact-form .btn{width:100%;margin:0}
+    footer{background:var(--night);padding:3rem 5%;border-top:1px solid rgba(196,160,70,0.2);color:var(--cream);text-align:center}
+    @media(max-width:768px){
+      nav{height:60px}
+      .nav-logo img{height:50px}
+      .about-grid
 cd ~/Documents/EA
-cat > index.html << 'FINAL'
+rm index.html
+cat > index.html << 'CORRECTO'
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -28,70 +83,81 @@ cat > index.html << 'FINAL'
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--night:#0D1A35;--gold:#C4A046;--cream:#F8F5EF;--warm:#F2EDE5}
     body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--night)}
-    nav{position:fixed;top:0;left:0;right:0;background:var(--night);z-index:100;padding:0 5%;height:80px;display:flex;justify-content:space-between;align-items:center}
+    nav{position:fixed;top:0;left:0;right:0;background:var(--night);z-index:100;padding:0 5%;height:80px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
     .nav-logo img{height:70px;width:auto}
     .nav-links{display:flex;gap:2rem;list-style:none}
-    .nav-links a{color:#fff;text-decoration:none;font-size:12px;text-transform:uppercase;letter-spacing:2px}
-    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 20px;cursor:pointer;border-radius:4px}
-    #hero{position:relative;height:100vh;display:flex;align-items:flex-end;overflow:hidden;margin-top:80px}
-    #hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(13,26,53,0.92) 0%,transparent 100%);z-index:2}
-    #heroVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+    .nav-links a{color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:2px;text-decoration:none;transition:color 0.3s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 20px;cursor:pointer;border-radius:4px;transition:all 0.3s}
+    .nav-cta:hover{background:var(--gold);color:var(--night)}
+    #hero{position:relative;height:100vh;display:flex;align-items:flex-end;overflow:hidden}
+    #heroVideo{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1}
+    #hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to top,rgba(13,26,53,0.92),transparent);z-index:2}
     .hero-content{position:relative;z-index:3;padding:0 5% 8%;max-width:900px}
-    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--cream);margin-bottom:20px}
-    .hero-sub{color:rgba(248,245,239,.7);font-size:1rem;margin-bottom:30px}
-    .btn{padding:12px 30px;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-block;margin-right:15px}
-    .btn-primary{background:var(--gold);color:var(--night)}
-    .btn-ghost{background:transparent;border:1px solid rgba(248,245,239,0.4);color:var(--cream)}
+    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--cream);margin-bottom:20px;font-weight:400}
+    .hero-sub{color:rgba(248,245,239,.8);font-size:1.1rem;margin-bottom:30px;font-weight:300}
+    .hero-buttons{display:flex;gap:15px;flex-wrap:wrap}
+    .btn{padding:12px 30px;border:none;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-block;font-size:12px;text-transform:uppercase;letter-spacing:2px;transition:all 0.3s}
+    .btn-primary{background:var(--gold);color:var(--night);font-weight:500}
+    .btn-primary:hover{background:#d4b876;transform:translateY(-2px)}
+    .btn-ghost{background:transparent;border:1px solid rgba(248,245,239,0.5);color:var(--cream)}
+    .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
     section{padding:6rem 5%}
-    .sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1rem}
-    h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem}
+    h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:2rem;font-weight:400}
+    h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem;font-weight:400}
+    p{line-height:1.8;margin-bottom:1.5rem;color:rgba(13,26,53,0.8)}
     .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:2rem}
     .slider-container{position:relative;width:100%;height:400px;background:var(--warm);border-radius:4px;overflow:hidden}
-    .slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s}
+    .slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease-in-out}
     .slide.active{opacity:1}
     .slide img{width:100%;height:100%;object-fit:cover}
     .slider-nav{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:0.5rem}
     .dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s}
     .dot:hover{background:rgba(255,255,255,0.7)}
     .dot.active{background:var(--gold)}
-    p{line-height:1.8;margin-bottom:1rem;color:rgba(13,26,53,0.8)}
     .project-detail{margin-top:3rem;padding-top:3rem;border-top:1px solid rgba(196,160,70,0.2)}
     .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:2rem}
     .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;transition:transform 0.3s}
     .gallery img:hover{transform:scale(1.05)}
     .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:2rem}
     .pillar{text-align:center}
-    .pillar h4{margin-bottom:1rem}
+    .pillar h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:1rem}
+    .pillar p{font-size:0.9rem}
     #contact{background:var(--night)}
-    #contact h2,#contact .sec-title{color:var(--cream)}
+    #contact h2{color:var(--cream)}
+    #contact p{color:rgba(248,245,239,0.8)}
     .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2rem}
     .contact-info{color:var(--cream)}
-    .contact-info div{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:center}
+    .contact-info div{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start}
+    .contact-info a{color:var(--gold);text-decoration:none}
     .contact-form{background:rgba(248,245,239,0.05);padding:2rem;border-radius:4px;border:1px solid rgba(196,160,70,0.2)}
-    input,select,textarea{width:100%;padding:10px;margin-bottom:1rem;background:rgba(255,255,255,0.08);border:1px solid rgba(196,160,70,0.2);color:var(--cream);border-radius:4px;font-family:inherit}
-    footer{background:var(--night);padding:3rem 5%;border-top:1px solid rgba(196,160,70,0.2);color:var(--cream)}
-    .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+    input,select,textarea{width:100%;padding:12px;margin-bottom:1rem;background:rgba(255,255,255,0.08);border:1px solid rgba(196,160,70,0.2);color:var(--cream);border-radius:4px;font-family:inherit;font-size:1rem}
+    input::placeholder,textarea::placeholder{color:rgba(248,245,239,0.5)}
+    .contact-form .btn{width:100%;margin:0}
+    footer{background:var(--night);padding:3rem 5%;border-top:1px solid rgba(196,160,70,0.2);color:var(--cream);text-align:center}
     @media(max-width:768px){
-      .about-grid,.contact-grid{grid-template-columns:1fr}
-      .pillars{grid-template-columns:1fr}
-      .footer-grid{grid-template-columns:1fr 1fr}
       nav{height:60px}
       .nav-logo img{height:50px}
-      #hero{margin-top:60px}
+      .about-grid,.contact-grid{grid-template-columns:1fr}
+      .pillars{grid-template-columns:1fr}
+      .hero-buttons{flex-direction:column;width:100%}
+      .btn{width:100%}
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo"><img src="./images/logo-ea-horizontal.jpg" alt="EA"></div>
+  <div class="nav-logo">
+    <img src="./images/logo-ea-horizontal.jpg" alt="EA Espacios Arquitectónicos">
+  </div>
   <ul class="nav-links">
     <li><a href="#inicio">Inicio</a></li>
     <li><a href="#proyectos">Proyectos</a></li>
     <li><a href="planos.html">Planos</a></li>
     <li><a href="blog.html">Blog</a></li>
   </ul>
-  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView()">Contacto</button>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contacto</button>
 </nav>
 
 <section id="inicio" id="hero">
@@ -102,13 +168,15 @@ cat > index.html << 'FINAL'
     <h1 class="hero-h1">EA – Espacios Arquitectónicos</h1>
     <p class="hero-sub">Diseño – Construcción – Control</p>
     <p style="color:rgba(248,245,239,.7);margin-bottom:30px">Diseñamos con propósito e inspiración: Cada espacio tiene una historia</p>
-    <a href="#proyectos" class="btn btn-primary">Ver Proyectos</a>
-    <button class="btn btn-ghost" onclick="document.getElementById('contact').scrollIntoView()">Hablemos</button>
+    <div class="hero-buttons">
+      <a href="#proyectos" class="btn btn-primary">Ver Proyectos</a>
+      <button class="btn btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hablemos</button>
+    </div>
   </div>
 </section>
 
 <section>
-  <h2 class="sec-title">Quiénes somos</h2>
+  <h2>Quiénes somos</h2>
   <div class="about-grid">
     <div>
       <h3>Un equipo que te acompaña a construir tus sueños</h3>
@@ -116,13 +184,13 @@ cat > index.html << 'FINAL'
       <p>Nos especializamos en casas a medida: proyectos que parten de escuchar a quien va a habitar el espacio, leer lugar y diseñar una respuesta con carácter propio.</p>
     </div>
     <div class="slider-container">
-      <div class="slide active"><img src="./images/Casa-el-refugio-01.png" alt=""></div>
-      <div class="slide"><img src="./images/Casa-en-el-bosque-02.png" alt=""></div>
-      <div class="slide"><img src="./images/Casa-en-la-ladera-02.png" alt=""></div>
-      <div class="slide"><img src="./images/Casa-JT-01.png" alt=""></div>
-      <div class="slide"><img src="./images/Casa-MT-01.png" alt=""></div>
-      <div class="slide"><img src="./images/Casa-San-Cristobal-01.png" alt=""></div>
-      <div class="slide"><img src="./images/Casa-SP-01.png" alt=""></div>
+      <div class="slide active"><img src="./images/Casa-el-refugio-01.png" alt="Casa El Refugio"></div>
+      <div class="slide"><img src="./images/Casa-en-el-bosque-02.png" alt="Casa en el Bosque"></div>
+      <div class="slide"><img src="./images/Casa-en-la-ladera-02.png" alt="Casa en la Ladera"></div>
+      <div class="slide"><img src="./images/Casa-JT-01.png" alt="Casa JT"></div>
+      <div class="slide"><img src="./images/Casa-MT-01.png" alt="Casa MT"></div>
+      <div class="slide"><img src="./images/Casa-San-Cristobal-01.png" alt="Casa San Cristóbal"></div>
+      <div class="slide"><img src="./images/Casa-SP-01.png" alt="Casa SP"></div>
       <div class="slider-nav">
         <div class="dot active" onclick="goToSlide(0)"></div>
         <div class="dot" onclick="goToSlide(1)"></div>
@@ -137,80 +205,132 @@ cat > index.html << 'FINAL'
 </section>
 
 <section id="proyectos">
-  <h2 class="sec-title">Proyectos destacados</h2>
+  <h2>Proyectos destacados</h2>
+  
   <div class="project-detail">
     <h3>Casa en la Ladera</h3>
     <div class="gallery">
-      <img src="./images/Casa-en-la-ladera-01.png" alt=""><img src="./images/Casa-en-la-ladera-02.png" alt=""><img src="./images/Casa-en-la-ladera-03.png" alt=""><img src="./images/Casa-en-la-ladera-04.png" alt=""><img src="./images/Casa-en-la-ladera-05.png" alt="">
+      <img src="./images/Casa-en-la-ladera-01.png" alt="">
+      <img src="./images/Casa-en-la-ladera-02.png" alt="">
+      <img src="./images/Casa-en-la-ladera-03.png" alt="">
+      <img src="./images/Casa-en-la-ladera-04.png" alt="">
+      <img src="./images/Casa-en-la-ladera-05.png" alt="">
     </div>
   </div>
+
   <div class="project-detail">
     <h3>Casa SP</h3>
     <div class="gallery">
-      <img src="./images/Casa-SP-01.png" alt=""><img src="./images/Casa-SP-02.png" alt=""><img src="./images/Casa-SP-03.png" alt=""><img src="./images/Casa-SP-04.png" alt=""><img src="./images/Casa-SP-05.png" alt=""><img src="./images/Casa-SP-06.png" alt="">
+      <img src="./images/Casa-SP-01.png" alt="">
+      <img src="./images/Casa-SP-02.png" alt="">
+      <img src="./images/Casa-SP-03.png" alt="">
+      <img src="./images/Casa-SP-04.png" alt="">
+      <img src="./images/Casa-SP-05.png" alt="">
+      <img src="./images/Casa-SP-06.png" alt="">
     </div>
   </div>
+
   <div class="project-detail">
     <h3>Casa El Refugio</h3>
     <div class="gallery">
-      <img src="./images/Casa-el-refugio-01.png" alt=""><img src="./images/Casa-el-refugio-02.jpg" alt=""><img src="./images/Casa-el-refugio-03.png" alt=""><img src="./images/Casa-el-refugio-04.jpg" alt=""><img src="./images/Casa-el-refugio-05.png" alt=""><img src="./images/Casa-el-refugio-06.png" alt=""><img src="./images/Casa-el-refugio-07.png" alt=""><img src="./images/Casa-el-refugio-08.png" alt="">
+      <img src="./images/Casa-el-refugio-01.png" alt="">
+      <img src="./images/Casa-el-refugio-02.jpg" alt="">
+      <img src="./images/Casa-el-refugio-03.png" alt="">
+      <img src="./images/Casa-el-refugio-04.jpg" alt="">
+      <img src="./images/Casa-el-refugio-05.png" alt="">
+      <img src="./images/Casa-el-refugio-06.png" alt="">
+      <img src="./images/Casa-el-refugio-07.png" alt="">
+      <img src="./images/Casa-el-refugio-08.png" alt="">
     </div>
   </div>
+
   <div class="project-detail">
     <h3>Casa San Cristóbal</h3>
     <div class="gallery">
-      <img src="./images/Casa-San-Cristobal-01.png" alt=""><img src="./images/Casa-San-Cristobal-02.png" alt=""><img src="./images/Casa-San-Cristobal-03.png" alt=""><img src="./images/Casa-San-Cristobal-04.jpeg" alt="">
+      <img src="./images/Casa-San-Cristobal-01.png" alt="">
+      <img src="./images/Casa-San-Cristobal-02.png" alt="">
+      <img src="./images/Casa-San-Cristobal-03.png" alt="">
+      <img src="./images/Casa-San-Cristobal-04.jpeg" alt="">
     </div>
   </div>
+
   <div class="project-detail">
     <h3>Casa MT</h3>
     <div class="gallery">
-      <img src="./images/Casa-MT-01.png" alt=""><img src="./images/Casa-MT-02.png" alt=""><img src="./images/Casa-MT-03.png" alt=""><img src="./images/Casa-MT-04.png" alt=""><img src="./images/Casa-MT-05.png" alt="">
+      <img src="./images/Casa-MT-01.png" alt="">
+      <img src="./images/Casa-MT-02.png" alt="">
+      <img src="./images/Casa-MT-03.png" alt="">
+      <img src="./images/Casa-MT-04.png" alt="">
+      <img src="./images/Casa-MT-05.png" alt="">
     </div>
   </div>
+
   <div class="project-detail">
     <h3>Casa JT</h3>
     <div class="gallery">
-      <img src="./images/Casa-JT-01.png" alt=""><img src="./images/Casa-JT-01A.png" alt=""><img src="./images/Casa-JT-02.png" alt=""><img src="./images/Casa-JT-02A.png" alt=""><img src="./images/Casa-JT-03.png" alt=""><img src="./images/Casa-JT-03A.png" alt=""><img src="./images/Casa-JT-04.png" alt=""><img src="./images/Casa-JT-05.png" alt="">
+      <img src="./images/Casa-JT-01.png" alt="">
+      <img src="./images/Casa-JT-01A.png" alt="">
+      <img src="./images/Casa-JT-02.png" alt="">
+      <img src="./images/Casa-JT-02A.png" alt="">
+      <img src="./images/Casa-JT-03.png" alt="">
+      <img src="./images/Casa-JT-03A.png" alt="">
+      <img src="./images/Casa-JT-04.png" alt="">
+      <img src="./images/Casa-JT-05.png" alt="">
     </div>
   </div>
+
   <div class="project-detail">
     <h3>Casa en el Bosque</h3>
     <div class="gallery">
-      <img src="./images/Casa-en-el-bosque-01.png" alt=""><img src="./images/Casa-en-el-bosque-02.png" alt=""><img src="./images/Casa-en-el-bosque-03.png" alt=""><img src="./images/Casa-en-el-bosque-04.png" alt=""><img src="./images/Casa-en-el-bosque-05.png" alt=""><img src="./images/Casa-en-el-bosque-06.png" alt="">
+      <img src="./images/Casa-en-el-bosque-01.png" alt="">
+      <img src="./images/Casa-en-el-bosque-02.png" alt="">
+      <img src="./images/Casa-en-el-bosque-03.png" alt="">
+      <img src="./images/Casa-en-el-bosque-04.png" alt="">
+      <img src="./images/Casa-en-el-bosque-05.png" alt="">
+      <img src="./images/Casa-en-el-bosque-06.png" alt="">
     </div>
   </div>
 </section>
 
 <section style="background:var(--warm)">
-  <h2 class="sec-title">Filosofía de diseño</h2>
+  <h2>Filosofía de diseño</h2>
   <div class="pillars">
-    <div class="pillar"><h4>Escuchar</h4><p>Antes de diseñar, entendemos cada necesidad.</p></div>
-    <div class="pillar"><h4>El lugar</h4><p>Diseñamos con el terreno, no contra él.</p></div>
-    <div class="pillar"><h4>Carácter</h4><p>Una casa memorable y funcional.</p></div>
+    <div class="pillar">
+      <h4>Escuchar</h4>
+      <p>Antes de diseñar, entendemos cada necesidad y forma de habitar el espacio.</p>
+    </div>
+    <div class="pillar">
+      <h4>El lugar</h4>
+      <p>La topografía, el clima y la orientación nos guían. Diseñamos con el terreno, no contra él.</p>
+    </div>
+    <div class="pillar">
+      <h4>Carácter</h4>
+      <p>Una casa debe funcionar perfectamente y tener algo que la haga memorable y única.</p>
+    </div>
   </div>
 </section>
 
 <section id="contact">
-  <h2 class="sec-title">Cuéntanos tu proyecto</h2>
+  <h2>Cuéntanos tu proyecto</h2>
   <div class="contact-grid">
     <div class="contact-info">
-      <div><span>📍</span><span>Medellín, Antioquia</span></div>
-      <div><span>📧</span><a href="mailto:contacto@espaciosarquitectonicos.com.co" style="color:var(--gold)">contacto@espaciosarquitectonicos.com.co</a></div>
-      <div><span>📱</span><a href="tel:+573003204489" style="color:var(--gold)">+57 300 320 4489</a></div>
+      <div><span style="font-size:1.5rem">📍</span><span>Medellín, Antioquia, Colombia</span></div>
+      <div><span style="font-size:1.5rem">📧</span><a href="mailto:contacto@espaciosarquitectonicos.com.co">contacto@espaciosarquitectonicos.com.co</a></div>
+      <div><span style="font-size:1.5rem">📱</span><a href="tel:+573003204489">+57 300 320 4489</a></div>
+      <div><span style="font-size:1.5rem">📱</span><a href="tel:+573012823484">+57 301 282 3484</a></div>
     </div>
     <div class="contact-form">
-      <input type="text" placeholder="Nombre"/><input type="email" placeholder="tu@correo.com"/><textarea placeholder="Tu mensaje..." style="min-height:100px"></textarea>
-      <button class="btn btn-primary" onclick="alert('Gracias')">Enviar</button>
+      <h3 style="color:var(--cream);margin-bottom:1rem;font-family:'Cormorant Garamond',serif">Escríbenos</h3>
+      <input type="text" placeholder="Nombre">
+      <input type="email" placeholder="tu@correo.com">
+      <textarea placeholder="Tu mensaje..." rows="5"></textarea>
+      <button class="btn btn-primary" onclick="alert('Gracias por tu mensaje. Nos contactaremos pronto.')">Enviar</button>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-grid">
-    <div><h4 style="color:var(--gold)">EA</h4><p>Diseño. Construcción. Control.</p></div>
-    <div></div><div></div><div></div>
-  </div>
+  <p style="margin-bottom:0">© 2026 EA – Espacios Arquitectónicos. Todos los derechos reservados.</p>
 </footer>
 
 <script>
@@ -219,6 +339,7 @@ const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.dot');
 
 function showSlide(n) {
+  if(slides.length === 0) return;
   slides.forEach(s => s.classList.remove('active'));
   dots.forEach(d => d.classList.remove('active'));
   slides[n].classList.add('active');
@@ -228,12 +349,16 @@ function showSlide(n) {
 function goToSlide(n) {
   currentSlide = n;
   showSlide(currentSlide);
+  clearInterval(autoSlide);
+  autoSlide = setInterval(nextSlide, 5000);
 }
 
-setInterval(() => {
+function nextSlide() {
   currentSlide = (currentSlide + 1) % slides.length;
   showSlide(currentSlide);
-}, 5000);
+}
+
+let autoSlide = setInterval(nextSlide, 5000);
 </script>
 
 </body>

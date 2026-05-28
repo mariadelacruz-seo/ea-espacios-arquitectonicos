@@ -4,143 +4,320 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EA – Espacios Arquitectónicos · Diseño. Construcción. Control.</title>
-  <meta name="description" content="EA – Espacios Arquitectónicos. Diseño y construcción de vivienda campestre en Colombia. Más de 20 años de experiencia."/>
+  <meta name="description" content="EA – Espacios Arquitectónicos. Diseño y construcción de vivienda campestre en Colombia. Más de 20 años de experiencia, metodología BIM y acompañamiento integral desde el diseño hasta la entrega."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
+    /* ── RESET & TOKENS ─────────────────────────────── */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--night:#0D1A35;--gold:#C4A046;--gold-light:#D4B376;--cream:#F8F5EF;--stone:#8B8680;--warm:#F2EDE5;--border:rgba(196,160,70,.2);--ff-serif:'Cormorant Garamond',Georgia,serif;--ff-sans:'Jost',sans-serif;--r:4px}
+    :root{
+      --night:#0D1A35;
+      --gold:#C9A96E;
+      --gold-light:#E2C896;
+      --cream:#F8F5EF;
+      --stone:#8B8680;
+      --warm:#F2EDE5;
+      --border:rgba(201,169,110,.2);
+      --ff-serif:'Cormorant Garamond',Georgia,serif;
+      --ff-sans:'Jost',sans-serif;
+      --r:4px;
+    }
     html{scroll-behavior:smooth}
     body{font-family:var(--ff-sans);background:var(--cream);color:var(--night);overflow-x:hidden}
     img{display:block;width:100%;height:100%;object-fit:cover}
     a{text-decoration:none;color:inherit}
-    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--night)}::-webkit-scrollbar-thumb{background:var(--gold)}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 5%;height:72px;transition:background .4s,box-shadow .4s;background:transparent}
+
+    /* ── SCROLLBAR ──────────────────────────────────── */
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--night)}
+    ::-webkit-scrollbar-thumb{background:var(--gold)}
+
+    /* ── NAV ────────────────────────────────────────── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:0 5%;height:72px;
+      transition:background .4s,box-shadow .4s;
+      background:transparent;
+    }
     nav.scrolled{background:var(--night);box-shadow:0 2px 20px rgba(0,0,0,.3)}
-    .nav-logo{display:flex;align-items:center;gap:1rem;z-index:101}
-    .nav-logo img{width:auto;height:50px;margin:0}
+    .nav-logo{display:flex;flex-direction:column;gap:2px;z-index:101}
+    .nav-logo-main{font-family:var(--ff-serif);font-size:1.35rem;font-weight:500;color:var(--cream);letter-spacing:.04em}
+    .nav-logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
     .nav-links{display:flex;gap:2.5rem;list-style:none}
     .nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .3s}
     .nav-links a:hover{color:var(--gold)}
     .nav-links a.active{color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:2px}
-    .nav-cta{font-size:10px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:.55rem 1.25rem;border-radius:var(--r);transition:background .3s,color .3s;cursor:pointer;background:transparent}
+    .nav-cta{
+      font-size:10px;letter-spacing:2px;text-transform:uppercase;
+      border:1px solid var(--gold);color:var(--gold);
+      padding:.55rem 1.25rem;border-radius:var(--r);
+      transition:background .3s,color .3s;
+      cursor:pointer;
+    }
     .nav-cta:hover{background:var(--gold);color:var(--night)}
-    #hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden}
-    .hero-carousel-container{position:absolute;inset:0}
-    .hero-carousel-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease-in-out}
-    .hero-carousel-slide.active{opacity:1}
-    .hero-carousel-slide img{width:100%;height:100%;object-fit:cover}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(13,26,53,.92) 0%, rgba(13,26,53,.5) 50%, rgba(13,26,53,.2) 100%);z-index:2}
-    .hero-content{position:relative;z-index:3;padding:0 5% 8%;max-width:900px}
-    .hero-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+    .menu-toggle{display:none;flex-direction:column;gap:4px;cursor:pointer;z-index:101}
+    .menu-toggle span{width:24px;height:2px;background:var(--cream);transition:.3s}
+
+    /* ── HERO ───────────────────────────────────────– */
+    #hero{
+      position:relative;height:100vh;min-height:640px;
+      display:flex;align-items:flex-end;
+      overflow:hidden;
+    }
+    .hero-img{
+      position:absolute;inset:0;
+      background-color:var(--night);
+      background-size:cover;
+      background-position:center;
+    }
+    .hero-carousel{
+      position:absolute;inset:0;
+      display:flex;
+      opacity:0;
+      transition:opacity .8s ease-in-out;
+    }
+    .hero-carousel.active{opacity:1}
+    .hero-carousel img{width:100%;height:100%;object-fit:cover}
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top, rgba(13,26,53,.92) 0%, rgba(13,26,53,.5) 50%, rgba(13,26,53,.2) 100%);
+    }
+    .hero-content{
+      position:relative;z-index:2;
+      padding:0 5% 8%;
+      max-width:900px;
+    }
+    .hero-label{
+      font-size:10px;letter-spacing:3px;text-transform:uppercase;
+      color:var(--gold);margin-bottom:1.5rem;
+      display:flex;align-items:center;gap:.75rem;
+    }
     .hero-label::before{content:'';width:40px;height:1px;background:var(--gold)}
-    .hero-h1{font-family:var(--ff-serif);font-size:clamp(2.8rem,6vw,5rem);font-weight:300;color:var(--cream);line-height:1.12;margin-bottom:1.5rem}
+    .hero-h1{
+      font-family:var(--ff-serif);font-size:clamp(2.8rem,6vw,5rem);
+      font-weight:300;color:var(--cream);line-height:1.12;
+      margin-bottom:1.5rem;
+    }
     .hero-h1 em{font-style:italic;color:var(--gold-light)}
-    .hero-sub{font-size:.95rem;font-weight:300;color:rgba(248,245,239,.7);line-height:1.75;max-width:520px;margin-bottom:2.5rem}
+    .hero-sub{
+      font-size:.95rem;font-weight:300;color:rgba(248,245,239,.7);
+      line-height:1.75;max-width:520px;margin-bottom:2.5rem;
+    }
     .hero-actions{display:flex;gap:1.25rem;flex-wrap:wrap}
-    .btn-primary{font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--gold);color:var(--night);padding:.85rem 2rem;border-radius:var(--r);transition:background .3s,transform .2s;font-weight:500;border:none;cursor:pointer;text-decoration:none;display:inline-block}
+    .btn-primary{
+      font-size:11px;letter-spacing:2px;text-transform:uppercase;
+      background:var(--gold);color:var(--night);
+      padding:.85rem 2rem;border-radius:var(--r);
+      transition:background .3s,transform .2s;
+      font-weight:500;
+      border:none;cursor:pointer;
+      text-decoration:none;
+      display:inline-block;
+    }
     .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px)}
-    .btn-ghost{font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(248,245,239,.4);color:var(--cream);padding:.85rem 2rem;border-radius:var(--r);transition:border-color .3s,color .3s;background:transparent;cursor:pointer;text-decoration:none;display:inline-block}
+    .btn-ghost{
+      font-size:11px;letter-spacing:2px;text-transform:uppercase;
+      border:1px solid rgba(248,245,239,.4);color:var(--cream);
+      padding:.85rem 2rem;border-radius:var(--r);
+      transition:border-color .3s,color .3s;
+      background:transparent;cursor:pointer;
+      text-decoration:none;
+      display:inline-block;
+    }
     .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-    .carousel-controls{position:absolute;bottom:3rem;left:5%;z-index:4;display:flex;gap:1rem}
-    .carousel-dot{width:12px;height:12px;border-radius:50%;background:rgba(248,245,239,.3);cursor:pointer;transition:background .3s}
+    .hero-scroll{
+      position:absolute;bottom:3rem;right:5%;z-index:2;
+      writing-mode:vertical-rl;
+      font-size:9px;letter-spacing:3px;text-transform:uppercase;
+      color:rgba(248,245,239,.4);
+      display:flex;align-items:center;gap:.75rem;
+      animation:bounce 2s infinite;
+    }
+    .hero-scroll::after{content:'';width:1px;height:50px;background:rgba(201,169,110,.4)}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+    /* ── BANNER ROTATIVO ────────────────────────────– */
+    #carousel-hero{
+      position:relative;height:100vh;min-height:640px;
+      display:flex;align-items:flex-end;
+      overflow:hidden;
+      margin-top:-100vh;
+      padding-top:100vh;
+    }
+    .carousel-img{
+      position:absolute;inset:0;
+      opacity:0;
+      transition:opacity .8s ease-in-out;
+    }
+    .carousel-img.active{opacity:1}
+    .carousel-controls{
+      position:absolute;bottom:3rem;left:5%;z-index:10;
+      display:flex;gap:1rem;
+    }
+    .carousel-dot{
+      width:12px;height:12px;border-radius:50%;
+      background:rgba(248,245,239,.3);
+      cursor:pointer;
+      transition:background .3s;
+    }
     .carousel-dot.active{background:var(--gold)}
+
+    /* ── SECTION COMMON ────────────────────────────── */
     section{padding:6rem 5%}
-    .sec-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}
-    .sec-label::before{content:'';width:40px;height:1px;background:var(--gold)}
-    .sec-title{font-family:var(--ff-serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;line-height:1.15;margin-bottom:1rem}
+    .sec-label{
+      font-size:10px;letter-spacing:3px;text-transform:uppercase;
+      color:var(--gold);margin-bottom:1rem;
+      display:flex;align-items:center;gap:.75rem;
+    }
+    .sec-label::before{content:'';width:30px;height:1px;background:var(--gold)}
+    .sec-title{
+      font-family:var(--ff-serif);font-size:clamp(2rem,4vw,3rem);
+      font-weight:300;color:var(--night);line-height:1.2;
+      margin-bottom:1.5rem;
+    }
     .sec-title em{font-style:italic;color:var(--gold)}
-    .sec-rule{width:60px;height:2px;background:var(--gold);margin-bottom:3rem}
-    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+    .sec-rule{width:48px;height:2px;background:var(--gold);margin-bottom:3rem}
+
+    /* ── ABOUT ──────────────────────────────────────– */
+    #about{background:var(--night)}
+    #about .sec-title{color:var(--cream)}
+    #about .sec-label{color:var(--gold)}
+    #about .sec-rule{background:var(--gold)}
+    .about-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+      align-items:center;
+    }
+    .about-text{
+      font-size:.95rem;font-weight:300;color:rgba(248,245,239,.7);
+      line-height:1.85;
+    }
+    .about-text p+p{margin-top:1.25rem}
+    .about-quote{
+      font-family:var(--ff-serif);font-size:1.25rem;font-style:italic;
+      color:var(--gold-light);line-height:1.7;
+      border-left:2px solid var(--gold);padding-left:1.75rem;
+      margin-top:2.5rem;
+    }
+    .about-imgs{
+      display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+      height:480px;
+    }
+    .about-img-1{grid-row:1/3;border-radius:var(--r);overflow:hidden}
+    .about-img-2{border-radius:var(--r);overflow:hidden}
+    .about-img-3{border-radius:var(--r);overflow:hidden}
+    .about-stat{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+      margin-top:3rem;padding-top:2.5rem;
+      border-top:1px solid rgba(201,169,110,.15);
+    }
+    .stat-num{
+      font-family:var(--ff-serif);font-size:3rem;font-weight:300;color:var(--gold);
+      line-height:1;
+    }
+    .stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(248,245,239,.4);margin-top:.4rem}
+
+    /* ── PILLARS ───────────────────────────────────– */
+    #pillars{background:var(--warm)}
+    .pillars-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+    }
+    .pillar-card{
+      background:var(--cream);border-radius:var(--r);
+      padding:2.5rem;border-bottom:3px solid transparent;
+      transition:border-color .3s,transform .3s,box-shadow .3s;
+    }
+    .pillar-card:hover{border-color:var(--gold);transform:translateY(-6px);box-shadow:0 12px 40px rgba(13,26,53,.08)}
+    .pillar-num{
+      font-family:var(--ff-serif);font-size:3.5rem;font-weight:300;
+      color:rgba(201,169,110,.2);line-height:1;margin-bottom:1.25rem;
+    }
+    .pillar-title{
+      font-family:var(--ff-serif);font-size:1.3rem;font-weight:500;
+      color:var(--night);margin-bottom:1rem;line-height:1.3;
+    }
+    .pillar-text{font-size:.88rem;font-weight:300;color:var(--stone);line-height:1.8}
+
+    /* ── CTA CARDS ──────────────────────────────────– */
+    .cta-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+      margin-top:3rem;
+    }
+    .cta-card{
+      background:var(--night);color:var(--cream);padding:2.5rem;
+      border-radius:var(--r);border-left:4px solid var(--gold);
+      transition:transform .3s,box-shadow .3s;
+      cursor:pointer;
+    }
+    .cta-card:hover{transform:translateX(8px);box-shadow:0 12px 40px rgba(13,26,53,.15)}
+    .cta-card h3{font-family:var(--ff-serif);font-size:1.3rem;margin-bottom:.5rem}
+    .cta-card p{font-size:.9rem;color:rgba(248,245,239,.7);line-height:1.6}
+
+    /* ── FADE ANIMATIONS ────────────────────────────– */
+    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s, transform .7s}
     .fade-up.visible{opacity:1;transform:translateY(0)}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
-    .about-text h3{font-family:var(--ff-serif);font-size:1.8rem;font-weight:400;margin-bottom:1.5rem;color:var(--night)}
-    .about-text p{font-size:.95rem;line-height:1.8;color:rgba(13,26,53,.8);margin-bottom:1.5rem}
-    .about-video{width:100%;height:400px;background:var(--warm);border-radius:var(--r);overflow:hidden}
-    .about-video video{width:100%;height:100%;object-fit:cover}
-    .project-detail{margin-top:4rem;border-top:1px solid var(--border);padding-top:3rem}
-    .project-detail h3{font-family:var(--ff-serif);font-size:2rem;margin-bottom:1rem;color:var(--night)}
-    .project-desc{font-size:.95rem;line-height:1.8;color:rgba(13,26,53,.8);margin-bottom:2rem}
-    .project-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-    .gallery-item{position:relative;overflow:hidden;border-radius:var(--r);aspect-ratio:4/3}
-    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
-    .gallery-item:hover img{transform:scale(1.05)}
-    .pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:3rem}
-    .pillar{text-align:center}
-    .pillar-icon{font-size:3rem;margin-bottom:1rem}
-    .pillar h4{font-family:var(--ff-serif);font-size:1.3rem;margin-bottom:.75rem;color:var(--night)}
-    .pillar-text{font-size:.9rem;line-height:1.7;color:rgba(13,26,53,.7)}
-    .cta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
-    .cta-card{background:var(--warm);padding:2.5rem;border-radius:var(--r);transition:background .3s,transform .3s;cursor:pointer}
-    .cta-card:hover{background:var(--gold-light);transform:translateY(-4px)}
-    .cta-card h3{font-family:var(--ff-serif);font-size:1.3rem;margin-bottom:1rem;color:var(--night)}
-    .cta-card p{font-size:.9rem;line-height:1.6;color:rgba(13,26,53,.7)}
-    #contact{background:var(--night)}
-    #contact .sec-title{color:var(--cream)}
-    #contact .sec-label{color:var(--gold)}
-    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
-    .contact-info{color:var(--cream)}
-    .contact-info p{margin-bottom:1.5rem}
-    .contact-info a{color:var(--gold);transition:color .3s}
-    .contact-info a:hover{color:var(--gold-light)}
-    .contact-form{background:rgba(248,245,239,.05);padding:2.5rem;border-radius:var(--r);border:1px solid rgba(196,160,70,.2)}
-    .contact-form input,.contact-form select,.contact-form textarea{background:rgba(255,255,255,.08);border:1px solid rgba(196,160,70,.2);color:var(--cream);padding:.75rem;border-radius:var(--r);font-family:var(--ff-sans);margin-bottom:1rem;width:100%}
-    .contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(248,245,239,.5)}
-    .contact-form button{width:100%;margin-top:.5rem}
-    footer{background:var(--night);border-top:1px solid rgba(196,160,70,.2);padding:4rem 5%;color:var(--cream)}
-    .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;margin-bottom:3rem}
-    .footer-col h4{margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem}
-    .footer-col p{font-size:.85rem;color:rgba(248,245,239,.6);line-height:1.7}
-    .footer-col ul{list-style:none}
-    .footer-col li{margin-bottom:.75rem}
-    .footer-col a{color:rgba(248,245,239,.7);transition:color .3s}
-    .footer-col a:hover{color:var(--gold)}
-    .footer-bottom{border-top:1px solid rgba(196,160,70,.15);padding-top:2rem;text-align:center;font-size:.85rem;color:rgba(248,245,239,.5)}
+    .fade-in{opacity:0;transition:opacity .7s}
+    .fade-in.visible{opacity:1}
+
+    /* ── RESPONSIVE ────────────────────────────────── */
     @media(max-width:768px){
-      .nav-links{gap:1.5rem}
-      .about-grid,.contact-grid{grid-template-columns:1fr;gap:2rem}
-      .pillars-grid,.cta-grid{grid-template-columns:1fr}
-      .footer-grid{grid-template-columns:1fr 1fr;gap:2rem}
+      .nav-links{display:none}
+      .menu-toggle{display:flex}
+      .about-grid{grid-template-columns:1fr}
+      .pillars-grid{grid-template-columns:1fr}
+      .cta-grid{grid-template-columns:1fr}
+      section{padding:3rem 5%}
+      .hero-scroll{display:none}
     }
   </style>
 </head>
 <body>
 
+<!-- ══════════════════ NAV ══════════════════ -->
 <nav id="navbar">
   <div class="nav-logo">
-    <img src="./images/logo-ea-horizontal.jpg" alt="EA Espacios Arquitectónicos">
+    <a href="index.html" class="nav-logo-main">EA</a>
+    <div class="nav-logo-sub">Espacios</div>
   </div>
   <ul class="nav-links">
-    <li><a href="#inicio" class="nav-link active">Inicio</a></li>
-    <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
-    <li><a href="planos.html" class="nav-link">Planos</a></li>
-    <li><a href="blog.html" class="nav-link">Blog</a></li>
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="planos.html">Planos Predefinidos</a></li>
+    <li><a href="blog.html">Blog</a></li>
   </ul>
-  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contacto</button>
+  <a href="#contact" class="nav-cta">Contacto</a>
+  <div class="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </nav>
 
-<section id="inicio" id="hero">
-  <div class="hero-carousel-container">
-    <div class="hero-carousel-slide active"><img src="./images/Casa-de-verano-01.png" alt=""></div>
-    <div class="hero-carousel-slide"><img src="./images/Casa-de-verano-04.png" alt=""></div>
-    <div class="hero-carousel-slide"><img src="./images/Casa-en-el-bosque-02.png" alt=""></div>
-    <div class="hero-carousel-slide"><img src="./images/Casa-en-la-ladera-02.png" alt=""></div>
-    <div class="hero-carousel-slide"><img src="./images/Casa-el-refugio-01.png" alt=""></div>
-    <div class="hero-carousel-slide"><img src="./images/Casa-el-refugio-07.png" alt=""></div>
-    <div class="hero-carousel-slide"><img src="./images/Casa-San-Cristobal-01.png" alt=""></div>
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="hero">
+  <div class="hero-carousel active">
+    <img src="./images/Casa-de-verano-01.png" alt="Casa de Verano"/>
+  </div>
+  <div class="hero-carousel">
+    <img src="./images/Casa-de-verano-04.png" alt="Casa de Verano"/>
+  </div>
+  <div class="hero-carousel">
+    <img src="./images/Casa-en-el-bosque-02.png" alt="Casa en el Bosque"/>
+  </div>
+  <div class="hero-carousel">
+    <img src="./images/Casa-en-la-ladera-02.png" alt="Casa en la Ladera"/>
+  </div>
+  <div class="hero-carousel">
+    <img src="./images/Casa-el-refugio-01.png" alt="Casa El Refugio"/>
+  </div>
+  <div class="hero-carousel">
+    <img src="./images/Casa-el-refugio-07.png" alt="Casa El Refugio"/>
+  </div>
+  <div class="hero-carousel">
+    <img src="./images/Casa-San-Cristobal-01.png" alt="Casa San Cristóbal"/>
   </div>
   <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-label">Bienvenido a</p>
-    <h1 class="hero-h1">EA – <em>Espacios</em><br/>Arquitectónicos</h1>
-    <p class="hero-sub">Diseño – Construcción – Control</p>
-    <p style="color:rgba(248,245,239,.7);font-size:1rem;margin-bottom:2.5rem;max-width:520px">Diseñamos con propósito e inspiración: Cada espacio tiene una historia</p>
-    <div class="hero-actions">
-      <a href="#proyectos" class="btn-primary">Ver Proyectos →</a>
-      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hablemos</button>
-    </div>
-  </div>
   <div class="carousel-controls">
     <div class="carousel-dot active" data-slide="0"></div>
     <div class="carousel-dot" data-slide="1"></div>
@@ -150,24 +327,52 @@
     <div class="carousel-dot" data-slide="5"></div>
     <div class="carousel-dot" data-slide="6"></div>
   </div>
+  <div class="hero-content fade-up">
+    <div class="hero-label">Bienvenido a</div>
+    <h1 class="hero-h1">Diseño. Construcción. <em>Control.</em></h1>
+    <p class="hero-sub">Diseñamos con propósito e inspiración. Cada espacio tiene una historia. Durante más de 20 años hemos acompañado a familias colombianas a construir sus sueños arquitectónicos en zonas campestres.</p>
+    <div class="hero-actions">
+      <a href="#about" class="btn-primary">Conoce nuestro proceso →</a>
+      <a href="proyectos.html" class="btn-ghost">Ver proyectos</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Explorar</span>
+  </div>
 </section>
 
-<section>
-  <div class="fade-up">
-    <p class="sec-label">Sobre nosotros</p>
-    <h2 class="sec-title">Quiénes <em>somos</em></h2>
-    <div class="sec-rule"></div>
-  </div>
+<!-- ══════════════════ ABOUT ══════════════════ -->
+<section id="about">
   <div class="about-grid">
-    <div class="fade-up" style="transition-delay:.1s">
-      <h3>Un equipo que te acompaña a construir tus sueños</h3>
-      <p>EA – Espacios Arquitectónicos es una oficina de diseño y construcción de vivienda campestre con sede en Medellín y más de 20 años de experiencia.</p>
-      <p>Nos especializamos en casas a medida: proyectos que parten de escuchar a quien va a habitar el espacio, leer lugar y diseñar una respuesta con carácter propio.</p>
-      <p>Lo que nos distingue no es solo el diseño: es el acompañamiento integral.</p>
-      <p style="font-style:italic;color:var(--gold);margin-top:2rem">«Cada espacio refleja los sueños y emociones de quien los habitará»</p>
+    <div class="fade-up">
+      <p class="sec-label">Quiénes somos</p>
+      <h2 class="sec-title">Un equipo <em>que te acompaña</em> a construir tus sueños</h2>
+      <div class="sec-rule"></div>
+      <div class="about-text">
+        <p>EA – Espacios Arquitectónicos es una oficina de diseño y construcción de vivienda campestre con sede en Medellín y más de 20 años de experiencia.</p>
+        <p>Nos especializamos en casas a medida: proyectos que parten de escuchar a quien va a habitar el espacio, leer el lugar y diseñar una respuesta con carácter propio.</p>
+        <p><strong>Lo que nos distingue no es solo el diseño: es el acompañamiento integral.</strong></p>
+      </div>
+      <div class="about-quote">
+        "Cada espacio refleja los sueños y emociones de quien los habitará"
+      </div>
+      <div class="about-stat">
+        <div>
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Años en el mercado</div>
+        </div>
+        <div>
+          <div class="stat-num">80+</div>
+          <div class="stat-label">Proyectos completados</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Clientes satisfechos</div>
+        </div>
+      </div>
     </div>
-    <div class="fade-up about-video" style="transition-delay:.2s">
-      <video width="100%" height="100%" controls style="object-fit:cover">
+    <div class="about-imgs fade-in">
+      <video style="grid-row:1/3;border-radius:var(--r);overflow:hidden;width:100%;height:100%;object-fit:cover" controls autoplay muted loop>
         <source src="./images/videos/Video-transicion-de-dia-a-noche.mp4" type="video/mp4">
         Tu navegador no soporta video HTML5.
       </video>
@@ -175,248 +380,195 @@
   </div>
 </section>
 
-<section id="proyectos">
-  <div class="fade-up">
-    <p class="sec-label">Nuestro portafolio</p>
-    <h2 class="sec-title">Proyectos <em>destacados</em></h2>
-    <div class="sec-rule"></div>
-    <p style="font-size:.95rem;line-height:1.8;color:rgba(13,26,53,.8);margin-top:2rem;max-width:700px">Cada casa tiene una historia. Aquí compartimos las de algunos de nuestros clientes. Cada proyecto parte de escuchar con atención, leer el lote y encontrar una respuesta que sea honesta con quien va a vivir ahí.</p>
-  </div>
-
-  <div class="project-detail fade-up" style="transition-delay:.1s">
-    <h3>Casa en la Ladera</h3>
-    <p class="project-desc">Vivienda unifamiliar · Terreno en pendiente · San Cristóbal<br/><br/>Las luces de la ciudad desplegadas al fondo, un horizonte urbano que no podía sacrificarse. El problema era que casi todo el lote era pendiente, y una solución convencional hubiera enterrado esa vista.<br/><br/>La decisión fue no tocar la ladera. En cambio, la terraza vuela hacia el vacío en voladizo, suspendida sobre la pendiente como una plataforma de observación. El vidrio templado de la baranda no interrumpe la visual —la enmarca. La piedra natural en el muro lateral aparece sin pulir, tosca y honesta, recordando que esta casa está clavada en una montaña.<br/><br/>Una vivienda que transforma su mayor limitación —la topografía— en su mayor virtud.</p>
-    <div class="project-gallery">
-      <div class="gallery-item"><img src="./images/Casa-en-la-ladera-01.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-la-ladera-02.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-la-ladera-03.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-la-ladera-04.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-la-ladera-05.png" alt=""></div>
-    </div>
-  </div>
-
-  <div class="project-detail fade-up" style="transition-delay:.15s">
-    <h3>Casa SP</h3>
-    <p class="project-desc">Vivienda vacacional · Clima cálido · Sopetrán, Antioquia<br/><br/>El calor era la condición de partida y también la que definió cada decisión de diseño. Una casa de descanso en clima tropical tiene que respirar antes de cualquier otra cosa, y este proyecto lo resuelve desde la piel hacia adentro. Los parales verticales de madera que conforman los cerramientos no son un cerramiento en el sentido estricto: son un filtro. El viento los atraviesa constantemente, los espacios nunca se cierran del todo y la brisa que corre entre los árboles termina siendo parte del ambiente interior.<br/><br/>La paleta es deliberadamente simple: blanco, beige, madera natural. Colores que no pelean con el sol sino que lo absorben y lo distribuyen.</p>
-    <div class="project-gallery">
-      <div class="gallery-item"><img src="./images/Casa-SP-01.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-SP-02.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-SP-03.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-SP-04.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-SP-05.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-SP-06.png" alt=""></div>
-    </div>
-  </div>
-
-  <div class="project-detail fade-up" style="transition-delay:.2s">
-    <h3>Casa El Refugio</h3>
-    <p class="project-desc">Vivienda unifamiliar · Condominio · Llano Grande, Antioquia<br/><br/>La cubierta a dos aguas con alturas generosas define el carácter del proyecto desde la primera mirada. Las carpinterías negras definen los vanos con precisión, y el vestíbulo de acceso —enmarcado por el volumen central con su gran lucernario— anuncia desde la entrada la altura interior que caracteriza todo el proyecto.<br/><br/>En la parte posterior, el proyecto cambia de registro. El patio —con BBQ, jacuzzi y conexión directa a la cocina— es donde esta casa vive realmente.</p>
-    <div class="project-gallery">
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-01.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-02.jpg" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-03.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-04.jpg" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-05.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-06.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-07.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-el-refugio-08.png" alt=""></div>
-    </div>
-  </div>
-
-  <div class="project-detail fade-up" style="transition-delay:.25s">
-    <h3>Casa San Cristóbal</h3>
-    <p class="project-desc">Vivienda unifamiliar · San Cristóbal<br/><br/>El cliente quería una casa que se sintiera parte del jardín. Una vivienda de un solo nivel, extendida horizontalmente sobre el terreno plano, donde la vida interior y exterior no tuvieran un límite claro.<br/><br/>El reto era lograr esa apertura total sin perder la escala íntima que hace habitable una casa campestre. La respuesta fue una cubierta plana que vuela generosamente sobre la terraza posterior, creando una zona de sombra permanente que invita a estar afuera.</p>
-    <div class="project-gallery">
-      <div class="gallery-item"><img src="./images/Casa-San-Cristobal-01.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-San-Cristobal-02.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-San-Cristobal-03.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-San-Cristobal-04.jpeg" alt=""></div>
-    </div>
-  </div>
-
-  <div class="project-detail fade-up" style="transition-delay:.3s">
-    <h3>Casa MT</h3>
-    <p class="project-desc">Vivienda unifamiliar · Un nivel · Patio central · Zona campestre<br/><br/>Una casa en L, se desarrolla en torno al patio, donde la piscina, el jacuzzi, la sala exterior y el jardín son el centro de la vida familiar. Los ventanales piso-techo desaparecen para dejar que el patio entre al salón. El reto era lograr esa interioridad en el exterior.</p>
-    <div class="project-gallery">
-      <div class="gallery-item"><img src="./images/Casa-MT-01.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-MT-02.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-MT-03.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-MT-04.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-MT-05.png" alt=""></div>
-    </div>
-  </div>
-
-  <div class="project-detail fade-up" style="transition-delay:.35s">
-    <h3>Casa JT</h3>
-    <p class="project-desc">Vivienda unifamiliar · Dos niveles · San Cristóbal<br/><br/>El cliente quería una casa con carácter. El reto era trabajar con dos niveles sin que la casa se volviera pesada.<br/><br/>La fachada combina ladrillo blanco encalado con volúmenes en piedra gris grafito oscuro que emergen como planos flotantes sobre el nivel bajo. Esa tensión entre lo claro y lo oscuro le da a la casa una identidad propia sin necesidad de ornamentos.</p>
-    <div class="project-gallery">
-      <div class="gallery-item"><img src="./images/Casa-JT-01.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-JT-01A.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-JT-02.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-JT-02A.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-JT-03.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-JT-03A.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-JT-04.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-JT-05.png" alt=""></div>
-    </div>
-  </div>
-
-  <div class="project-detail fade-up" style="transition-delay:.4s">
-    <h3>Casa en el Bosque</h3>
-    <p class="project-desc">Vivienda campestre · Zona campestre<br/><br/>Lote min de 35m x 30m · Área: XX m2</p>
-    <div class="project-gallery">
-      <div class="gallery-item"><img src="./images/Casa-en-el-bosque-01.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-el-bosque-02.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-el-bosque-03.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-el-bosque-04.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-el-bosque-05.png" alt=""></div>
-      <div class="gallery-item"><img src="./images/Casa-en-el-bosque-06.png" alt=""></div>
-    </div>
-  </div>
-</section>
-
-<section style="background:var(--warm)">
+<!-- ══════════════════ PILLARS ══════════════════ -->
+<section id="pillars">
   <div class="fade-up">
     <p class="sec-label">Filosofía de diseño</p>
-    <h2 class="sec-title">Lo que nos <em>define</em></h2>
+    <h2 class="sec-title">Cómo pensamos <em>el diseño</em></h2>
     <div class="sec-rule"></div>
   </div>
-  <div class="pillars-grid">
-    <div class="pillar fade-up" style="transition-delay:.1s">
-      <div class="pillar-icon">👂</div>
-      <h4>Escuchar</h4>
+  <div class="pillars-grid" style="margin-top:2rem">
+    <div class="pillar-card fade-up" style="transition-delay:.1s">
+      <div class="pillar-num">01</div>
+      <h3 class="pillar-title">Escuchar</h3>
       <p class="pillar-text">Antes de diseñar, entendemos. Cada cliente tiene una historia, unas necesidades y una forma de habitar. Ese relato se convierte en el ADN del proyecto.</p>
     </div>
-    <div class="pillar fade-up" style="transition-delay:.15s">
-      <div class="pillar-icon">🗺️</div>
-      <h4>El lugar como punto de partida</h4>
+    <div class="pillar-card fade-up" style="transition-delay:.2s">
+      <div class="pillar-num">02</div>
+      <h3 class="pillar-title">El lugar como punto de partida</h3>
       <p class="pillar-text">La topografía, el clima, la orientación, las vistas: el terreno nos habla. Nuestro trabajo es aprender a escucharlo y diseñar con él, no contra él.</p>
     </div>
-    <div class="pillar fade-up" style="transition-delay:.2s">
-      <div class="pillar-icon">✨</div>
-      <h4>Funcionalidad con carácter</h4>
+    <div class="pillar-card fade-up" style="transition-delay:.3s">
+      <div class="pillar-num">03</div>
+      <h3 class="pillar-title">Funcionalidad con carácter</h3>
       <p class="pillar-text">Una casa tiene que funcionar perfectamente en el día a día. Pero también tiene que tener algo que la haga memorable, que la haga tuya.</p>
     </div>
   </div>
 </section>
 
-<section id="contact">
-  <div class="contact-grid">
+<!-- ══════════════════ CTA CARDS ══════════════════ -->
+<section>
+  <div class="fade-up">
+    <p class="sec-label">Nuestros servicios</p>
+    <h2 class="sec-title">Lo que <em>ofrecemos</em></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="cta-grid">
+    <div class="cta-card fade-up" style="transition-delay:.1s;cursor:pointer" onclick="window.location.href='#contact'">
+      <h3>Diseño y Construcción Integral</h3>
+      <p>De la idea a la llave en la mano. Acompañamiento completo desde el diseño inicial hasta la entrega de tu proyecto.</p>
+    </div>
+    <div class="cta-card fade-up" style="transition-delay:.2s;cursor:pointer" onclick="window.location.href='planos.html'">
+      <h3>Planos Predefinidos</h3>
+      <p>Modelos de casa campestre en construcción, listos para adaptar a tu lote y necesidades específicas.</p>
+    </div>
+    <div class="cta-card fade-up" style="transition-delay:.3s;cursor:pointer" onclick="window.location.href='#contact'">
+      <h3>Interventoría y BIM</h3>
+      <p>Control técnico y presupuestal de tu obra con metodología BIM. Transparencia total en cada fase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<section id="contact" style="background:var(--night)">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
     <div class="fade-up">
       <p class="sec-label">Hablemos</p>
       <h2 class="sec-title">Cuéntanos<br/><em>tu proyecto</em></h2>
       <div class="sec-rule"></div>
       <p style="color:rgba(248,245,239,.7);font-size:.95rem;line-height:1.8;margin-bottom:2rem">No importa si todavía es solo una idea o si ya tienes el lote listo: el mejor momento para hablar con un arquitecto es antes de tomar decisiones.</p>
-      <div class="contact-info">
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
-          <span style="font-size:1.5rem">📍</span>
+      <div style="display:flex;flex-direction:column;gap:1.5rem">
+        <div style="display:flex;align-items:center;gap:1rem;color:var(--cream)">
+          <div style="font-size:1.5rem">📍</div>
           <span>Medellín, Antioquia, Colombia</span>
         </div>
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
-          <span style="font-size:1.5rem">📧</span>
+        <div style="display:flex;align-items:center;gap:1rem;color:var(--cream)">
+          <div style="font-size:1.5rem">📧</div>
           <a href="mailto:contacto@espaciosarquitectonicos.com.co">contacto@espaciosarquitectonicos.com.co</a>
         </div>
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
-          <span style="font-size:1.5rem">📱</span>
+        <div style="display:flex;align-items:center;gap:1rem;color:var(--cream)">
+          <div style="font-size:1.5rem">📱</div>
           <a href="tel:+573003204489">+57 300 320 4489</a>
         </div>
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
-          <span style="font-size:1.5rem">📱</span>
-          <a href="tel:+573012823484">+57 301 282 3484</a>
-        </div>
-        <div style="display:flex;align-items:center;gap:1rem">
-          <span style="font-size:1.5rem">🌐</span>
-          <span>espaciosarquitectonicos.com.co</span>
+        <div style="display:flex;align-items:center;gap:1rem;color:var(--cream)">
+          <div style="font-size:1.5rem">🌐</div>
+          <a href="#">espaciosarquitectonicos.com.co</a>
         </div>
       </div>
     </div>
-    <div class="fade-up contact-form" style="transition-delay:.15s">
-      <h3 style="font-family:var(--ff-serif);font-size:1.5rem;color:var(--cream);margin-bottom:1rem">Escríbenos</h3>
-      <p style="font-size:.9rem;color:rgba(248,245,239,.6);margin-bottom:2rem">Te respondemos en menos de 24 horas</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
-        <input type="text" placeholder="Nombre"/>
-        <input type="text" placeholder="Ciudad"/>
-      </div>
-      <input type="email" placeholder="tu@correo.com"/>
-      <select>
-        <option>¿En qué podemos ayudarte?</option>
-        <option>Diseño Integral</option>
-        <option>Planos Predefinidos</option>
-        <option>Interventoría</option>
-        <option>Presupuesto</option>
-      </select>
-      <textarea placeholder="Cuéntanos tu proyecto..." style="min-height:120px;resize:vertical"></textarea>
-      <button class="btn-primary" style="width:100%;border:none;cursor:pointer" type="button" onclick="alert('Gracias por tu mensaje. Nos pondremos en contacto pronto.')">Enviar mensaje →</button>
+    <div class="fade-up" style="transition-delay:.15s">
+      <form style="background:rgba(248,245,239,.05);padding:2.5rem;border-radius:var(--r);border:1px solid rgba(201,169,110,.2)">
+        <h3 style="font-family:var(--ff-serif);font-size:1.5rem;color:var(--cream);margin-bottom:1rem">Escríbenos</h3>
+        <p style="font-size:.9rem;color:rgba(248,245,239,.6);margin-bottom:2rem">Te respondemos en menos de 24 horas</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+          <input type="text" placeholder="Nombre" style="background:rgba(255,255,255,.08);border:1px solid rgba(201,169,110,.2);color:var(--cream);padding:.75rem;border-radius:var(--r)"/>
+          <input type="text" placeholder="Ciudad" style="background:rgba(255,255,255,.08);border:1px solid rgba(201,169,110,.2);color:var(--cream);padding:.75rem;border-radius:var(--r)"/>
+        </div>
+        <input type="email" placeholder="tu@correo.com" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(201,169,110,.2);color:var(--cream);padding:.75rem;border-radius:var(--r);margin-bottom:1rem"/>
+        <select style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(201,169,110,.2);color:rgba(248,245,239,.7);padding:.75rem;border-radius:var(--r);margin-bottom:1rem">
+          <option>¿En qué podemos ayudarte?</option>
+          <option>Diseño Integral</option>
+          <option>Planos Predefinidos</option>
+          <option>Interventoría</option>
+          <option>Presupuesto</option>
+        </select>
+        <textarea placeholder="Cuéntanos tu proyecto..." style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(201,169,110,.2);color:var(--cream);padding:.75rem;border-radius:var(--r);margin-bottom:1.5rem;min-height:120px;font-family:var(--ff-sans);resize:vertical"/>
+        <button class="btn-primary" style="width:100%;border:none;cursor:pointer" type="button" onclick="alert('Gracias por tu mensaje. Nos pondremos en contacto pronto.')">Enviar mensaje →</button>
+      </form>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="footer-grid">
-    <div class="footer-col">
-      <h4>EA – Espacios Arquitectónicos</h4>
-      <p style="font-size:.9rem;color:var(--gold);margin-bottom:1rem;letter-spacing:2px;text-transform:uppercase">Diseño. Construcción. Control.</p>
-      <p>Oficina de diseño y construcción de vivienda campestre con sede en Medellín y más de 20 años de experiencia.</p>
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer style="background:var(--night);border-top:1px solid rgba(201,169,110,.2);padding:4rem 5%;color:var(--cream)">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;margin-bottom:3rem">
+    <div>
+      <div style="font-family:var(--ff-serif);font-size:1.3rem;margin-bottom:.5rem">EA – Espacios Arquitectónicos</div>
+      <div style="font-size:.9rem;color:var(--gold);margin-bottom:1rem;letter-spacing:2px;text-transform:uppercase">Diseño. Construcción. Control.</div>
+      <p style="font-size:.85rem;color:rgba(248,245,239,.6);line-height:1.7">Oficina de diseño y construcción de vivienda campestre con sede en Medellín y más de 20 años de experiencia.</p>
     </div>
-    <div class="footer-col">
-      <h4>Sitio</h4>
-      <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="planos.html">Planos Predefinidos</a></li>
-        <li><a href="blog.html">Blog</a></li>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Sitio</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="index.html">Inicio</a></li>
+        <li style="margin-bottom:.75rem"><a href="proyectos.html">Proyectos</a></li>
+        <li style="margin-bottom:.75rem"><a href="planos.html">Planos Predefinidos</a></li>
+        <li style="margin-bottom:.75rem"><a href="blog.html">Blog</a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h4>Contacto</h4>
-      <ul>
-        <li><a href="mailto:contacto@espaciosarquitectonicos.com.co">contacto@espaciosarquitectonicos.com.co</a></li>
-        <li><a href="tel:+573003204489">+57 300 320 4489</a></li>
-        <li><a href="tel:+573012823484">+57 301 282 3484</a></li>
-        <li>Medellín, Antioquia</li>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Contacto</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="mailto:contacto@espaciosarquitectonicos.com.co">contacto@espaciosarquitectonicos.com.co</a></li>
+        <li style="margin-bottom:.75rem"><a href="tel:+573003204489">+57 300 320 4489</a></li>
+        <li style="margin-bottom:.75rem">Medellín, Antioquia</li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h4>Síguenos</h4>
-      <ul style="display:flex;gap:1rem">
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">YouTube</a></li>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Síguenos</p>
+      <ul style="list-style:none;display:flex;gap:1rem">
+        <li><a href="#" style="color:var(--gold);font-weight:500">Instagram</a></li>
+        <li><a href="#" style="color:var(--gold);font-weight:500">LinkedIn</a></li>
+        <li><a href="#" style="color:var(--gold);font-weight:500">YouTube</a></li>
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div style="border-top:1px solid rgba(201,169,110,.15);padding-top:2rem;text-align:center;font-size:.85rem;color:rgba(248,245,239,.5)">
     <p>© 2026 EA – Espacios Arquitectónicos. Todos los derechos reservados.</p>
   </div>
 </footer>
 
+<!-- ══════════════════ JS ══════════════════ -->
 <script>
+// Nav scroll
 const nav = document.getElementById('navbar');
-window.addEventListener('scroll', () => {nav.classList.toggle('scrolled', window.scrollY > 60)}, {passive: true});
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, {passive: true});
+
+// Carousel
 let currentSlide = 0;
-const slides = document.querySelectorAll('.hero-carousel-slide');
+const carousels = document.querySelectorAll('.hero-carousel');
 const dots = document.querySelectorAll('.carousel-dot');
+
 function showSlide(n) {
-  slides.forEach(s => s.classList.remove('active'));
+  carousels.forEach(c => c.classList.remove('active'));
   dots.forEach(d => d.classList.remove('active'));
-  slides[n].classList.add('active');
+  carousels[n].classList.add('active');
   dots[n].classList.add('active');
 }
-dots.forEach((dot, i) => {dot.addEventListener('click', () => {currentSlide = i; showSlide(currentSlide)})});
-setInterval(() => {currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide)}, 5000);
+
+dots.forEach((dot, i) => {
+  dot.addEventListener('click', () => {
+    currentSlide = i;
+    showSlide(currentSlide);
+  });
+});
+
+setInterval(() => {
+  currentSlide = (currentSlide + 1) % carousels.length;
+  showSlide(currentSlide);
+}, 5000);
+
+// Fade-up / fade-in on scroll
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting) {e.target.classList.add('visible'); observer.unobserve(e.target)}
-  })
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
 }, {threshold: 0.12});
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+document.querySelectorAll('.fade-up, .fade-in').forEach(el => observer.observe(el));
+
+// Nav highlight
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
     link.classList.add('active');
-  })
+  });
 });
 </script>
-
 </body>
 </html>

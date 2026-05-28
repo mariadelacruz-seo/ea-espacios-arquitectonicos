@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planos Predefinidos · EA – Espacios Arquitectónicos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --night:#0D1A35;
+      --gold:#C9A96E;
+      --gold-light:#E2C896;
+      --cream:#F8F5EF;
+      --stone:#8B8680;
+      --warm:#F2EDE5;
+      --ff-serif:'Cormorant Garamond',Georgia,serif;
+      --ff-sans:'Jost',sans-serif;
+      --r:4px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-sans);background:var(--cream);color:var(--night);overflow-x:hidden}
+    img{display:block;max-width:100%;height:auto}
+    a{text-decoration:none;color:inherit}
+
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--night)}
+    ::-webkit-scrollbar-thumb{background:var(--gold)}
+
+    /* ── NAV ────────────────────────────────────────── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:0 5%;height:72px;
+      background:var(--night);box-shadow:0 2px 20px rgba(0,0,0,.3);
+    }
+    .nav-logo{display:flex;flex-direction:column;gap:2px}
+    .nav-logo a{font-family:var(--ff-serif);font-size:1.35rem;font-weight:500;color:var(--cream)}
+    .nav-logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .3s}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+    .nav-cta{
+      font-size:10px;letter-spacing:2px;text-transform:uppercase;
+      border:1px solid var(--gold);color:var(--gold);
+      padding:.55rem 1.25rem;border-radius:var(--r);
+      transition:background .3s,color .3s;cursor:pointer;
+    }
+    .nav-cta:hover{background:var(--gold);color:var(--night)}
+
+    /* ── PAGE HEADER ────────────────────────────────– */
+    .page-header{
+      padding-top:120px;padding-bottom:4rem;background:linear-gradient(135deg, var(--night) 0%, #1a2e52 100%);text-align:center;color:var(--cream);
+      border-bottom:1px solid rgba(201,169,110,.2);
+    }
+    .page-header h1{
+      font-family:var(--ff-serif);font-size:clamp(2rem,5vw,3.5rem);
+      font-weight:300;margin-bottom:.5rem;
+    }
+    .page-header p{
+      font-size:.95rem;color:rgba(248,245,239,.6);max-width:700px;margin:0 auto;
+    }
+
+    /* ── PLANS CONTAINER ────────────────────────────– */
+    .plans-container{
+      padding:6rem 5%;max-width:1400px;margin:0 auto;
+    }
+
+    /* ── INTRO ────────────────────────────────────– */
+    .plans-intro{
+      background:var(--warm);padding:3rem;border-radius:var(--r);
+      margin-bottom:4rem;text-align:center;max-width:900px;margin-left:auto;margin-right:auto;
+    }
+    .plans-intro p{
+      font-size:.95rem;color:var(--stone);line-height:1.8;
+    }
+
+    /* ── PLANS GRID ────────────────────────────────– */
+    .plans-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:3rem;margin-bottom:4rem;
+    }
+
+    /* ── PLAN CARD ────────────────────────────────– */
+    .plan-card{
+      background:white;border:1px solid var(--border);border-radius:var(--r);
+      overflow:hidden;transition:all .3s;
+      display:flex;flex-direction:column;
+    }
+    .plan-card:hover{
+      box-shadow:0 12px 40px rgba(13,26,53,.12);
+      border-color:var(--gold);
+      transform:translateY(-4px);
+    }
+    .plan-image{
+      width:100%;height:280px;overflow:hidden;
+      background:var(--warm);position:relative;
+    }
+    .plan-image img{
+      width:100%;height:100%;object-fit:cover;transition:filter .3s;filter:grayscale(100%);
+    }
+    .plan-card:hover .plan-image img{filter:grayscale(0%);transform:scale(1.03)}
+    .plan-badge{
+      position:absolute;top:1.5rem;right:1.5rem;
+      background:var(--gold);color:var(--night);
+      padding:.5rem 1rem;border-radius:20px;
+      font-size:.75rem;font-weight:500;letter-spacing:1px;
+      text-transform:uppercase;
+    }
+    .plan-content{
+      padding:2.5rem;flex:1;display:flex;flex-direction:column;
+    }
+    .plan-name{
+      font-family:var(--ff-serif);font-size:1.5rem;font-weight:400;
+      color:var(--night);margin-bottom:.5rem;
+    }
+    .plan-subtitle{
+      font-size:.85rem;letter-spacing:1px;text-transform:uppercase;
+      color:var(--gold);margin-bottom:1.5rem;
+    }
+    .plan-specs{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+      padding:1.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+      margin-bottom:1.5rem;
+    }
+    .spec{
+      text-align:center;
+    }
+    .spec-value{
+      font-family:var(--ff-serif);font-size:1.3rem;font-weight:400;
+      color:var(--night);
+    }
+    .spec-label{
+      font-size:.75rem;letter-spacing:1px;text-transform:uppercase;
+      color:var(--stone);margin-top:.25rem;
+    }
+    .plan-description{
+      font-size:.9rem;color:var(--stone);line-height:1.7;
+      margin-bottom:1.5rem;flex:1;
+    }
+    .plan-features{
+      display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem;
+      padding:1rem 0;border-top:1px solid var(--border);
+    }
+    .feature{
+      display:flex;align-items:center;gap:.75rem;font-size:.9rem;color:var(--stone);
+    }
+    .feature::before{
+      content:'✓';color:var(--gold);font-weight:bold;font-size:1.1rem;
+    }
+    .plan-cta{
+      display:flex;gap:1rem;
+    }
+    .btn-hotmart{
+      flex:1;
+      background:var(--gold);color:var(--night);
+      padding:.85rem 1.5rem;border:none;border-radius:var(--r);
+      font-size:.85rem;letter-spacing:1px;text-transform:uppercase;
+      font-weight:500;cursor:pointer;transition:.3s;
+      text-decoration:none;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .btn-hotmart:hover{
+      background:var(--gold-light);
+      transform:scale(1.02);
+    }
+    .btn-info{
+      background:transparent;color:var(--gold);border:1px solid var(--gold);
+      padding:.85rem 1.5rem;border-radius:var(--r);
+      font-size:.85rem;letter-spacing:1px;text-transform:uppercase;
+      font-weight:500;cursor:pointer;transition:.3s;
+      flex:1;
+    }
+    .btn-info:hover{
+      background:var(--gold);color:var(--night);
+    }
+
+    /* ── CTA SECTION ────────────────────────────────– */
+    .cta-section{
+      background:var(--night);color:var(--cream);padding:4rem;
+      border-radius:var(--r);text-align:center;margin-bottom:4rem;
+    }
+    .cta-section h2{
+      font-family:var(--ff-serif);font-size:2rem;margin-bottom:1rem;
+    }
+    .cta-section p{
+      font-size:.95rem;color:rgba(248,245,239,.7);margin-bottom:2rem;
+      max-width:600px;margin-left:auto;margin-right:auto;
+    }
+    .btn-cta-primary{
+      background:var(--gold);color:var(--night);
+      padding:1rem 2.5rem;border:none;border-radius:var(--r);
+      font-size:.9rem;letter-spacing:2px;text-transform:uppercase;
+      font-weight:500;cursor:pointer;transition:.3s;
+    }
+    .btn-cta-primary:hover{
+      background:var(--gold-light);
+      transform:translateY(-2px);
+    }
+
+    /* ── FADE ANIMATIONS ────────────────────────────– */
+    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s, transform .7s}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+
+    /* ── FOOTER ────────────────────────────────────– */
+    footer{background:var(--night);border-top:1px solid rgba(201,169,110,.2);padding:4rem 5%;color:var(--cream)}
+    footer a{color:var(--cream);transition:color .3s}
+    footer a:hover{color:var(--gold)}
+
+    /* ── RESPONSIVE ────────────────────────────────– */
+    @media(max-width:768px){
+      .plans-grid{grid-template-columns:1fr}
+      .plan-specs{grid-template-columns:repeat(3,1fr);gap:.5rem}
+      .plan-cta{flex-direction:column}
+      .page-header{padding-top:100px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html" style="font-family:var(--ff-serif);font-size:1.35rem;font-weight:500;color:var(--cream)">EA</a>
+    <div class="nav-logo-sub">Espacios</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="planos.html" class="active">Planos Predefinidos</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Contacto</a>
+</nav>
+
+<!-- ══════════════════ PAGE HEADER ══════════════════ -->
+<div class="page-header">
+  <h1>Planos Predefinidos</h1>
+  <p>Diseños de casas campestres listos para construir. Modelos versátiles que puedes adaptar a tu lote, necesidades y presupuesto. Acceso completo a planos, especificaciones técnicas y detalles constructivos.</p>
+</div>
+
+<!-- ══════════════════ PLANS CONTAINER ══════════════════ -->
+<div class="plans-container">
+  <!-- INTRO -->
+  <div class="plans-intro fade-up">
+    <p><strong>¿Cómo funciona?</strong> Selecciona el modelo que más se ajuste a tus necesidades y obtén acceso inmediato a todos los planos en alta resolución. Cada paquete incluye: planos arquitectónicos completos, especificaciones técnicas, detalles constructivos, lista de materiales y presupuesto estimado.</p>
+  </div>
+
+  <!-- PLANS GRID -->
+  <div class="plans-grid">
+    <!-- Plan 1: Casa de Campo Esencial -->
+    <div class="plan-card fade-up">
+      <div class="plan-image">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Casa de Campo Esencial"/>
+        <span class="plan-badge">Básico</span>
+      </div>
+      <div class="plan-content">
+        <h3 class="plan-name">Casa de Campo Esencial</h3>
+        <div class="plan-subtitle">Lote mínimo: 35m x 30m</div>
+        <div class="plan-specs">
+          <div class="spec">
+            <div class="spec-value">120m²</div>
+            <div class="spec-label">Área Construida</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">2</div>
+            <div class="spec-label">Habitaciones</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">1</div>
+            <div class="spec-label">Baños</div>
+          </div>
+        </div>
+        <p class="plan-description">Diseño compacto y funcional perfecto para parejas o familias pequeñas. Distribución abierta que maximiza el espacio y conecta interior con exterior. Ideal para terrenos pequeños.</p>
+        <div class="plan-features">
+          <div class="feature">Planos arquitectónicos completos</div>
+          <div class="feature">Especificaciones técnicas</div>
+          <div class="feature">Detalles constructivos</div>
+          <div class="feature">Presupuesto estimado</div>
+        </div>
+        <div class="plan-cta">
+          <a href="https://hotmart.com/es/cart/add?product=12345678" class="btn-hotmart" target="_blank">Comprar planos →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan 2: Casa Moderna 3 Recámaras -->
+    <div class="plan-card fade-up" style="transition-delay:.1s">
+      <div class="plan-image">
+        <img src="https://images.unsplash.com/photo-1600566753086-00541fbb91e7?w=600&q=80" alt="Casa Moderna"/>
+        <span class="plan-badge">Popular</span>
+      </div>
+      <div class="plan-content">
+        <h3 class="plan-name">Casa Moderna 3RC</h3>
+        <div class="plan-subtitle">Lote mínimo: 45m x 40m</div>
+        <div class="plan-specs">
+          <div class="spec">
+            <div class="spec-value">180m²</div>
+            <div class="spec-label">Área Construida</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">3</div>
+            <div class="spec-label">Habitaciones</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">2</div>
+            <div class="spec-label">Baños</div>
+          </div>
+        </div>
+        <p class="plan-description">Vivienda versátil con tres habitaciones, salón y comedor integrado. Líneas limpias, grandes ventanales y conexión total con áreas verdes. Perfecto para familias.</p>
+        <div class="plan-features">
+          <div class="feature">Todas las características básicas</div>
+          <div class="feature">Modelado BIM</div>
+          <div class="feature">Ingeniería estructural</div>
+          <div class="feature">Asesoría virtual incluida</div>
+        </div>
+        <div class="plan-cta">
+          <a href="https://hotmart.com/es/cart/add?product=87654321" class="btn-hotmart" target="_blank">Comprar planos →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan 3: Casa Campestre Patio Central -->
+    <div class="plan-card fade-up" style="transition-delay:.2s">
+      <div class="plan-image">
+        <img src="https://images.unsplash.com/photo-1600607687644-c173cecb4a75?w=600&q=80" alt="Casa Patio Central"/>
+        <span class="plan-badge">Premium</span>
+      </div>
+      <div class="plan-content">
+        <h3 class="plan-name">Casa Campestre XL</h3>
+        <div class="plan-subtitle">Lote mínimo: 50m x 50m</div>
+        <div class="plan-specs">
+          <div class="spec">
+            <div class="spec-value">240m²</div>
+            <div class="spec-label">Área Construida</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">4</div>
+            <div class="spec-label">Habitaciones</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">3</div>
+            <div class="spec-label">Baños</div>
+          </div>
+        </div>
+        <p class="plan-description">Casa de planta en L con patio central. Amplio salón, cocina integrada, zona de servicios y terraza cubierta. Diseño que prioriza la vida en familia y espacios al aire libre.</p>
+        <div class="plan-features">
+          <div class="feature">Todas las características premium</div>
+          <div class="feature">Diseño personalizado</div>
+          <div class="feature">Ingeniería completa</div>
+          <div class="feature">Asesoría arquitectónica 6 meses</div>
+        </div>
+        <div class="plan-cta">
+          <a href="https://hotmart.com/es/cart/add?product=11223344" class="btn-hotmart" target="_blank">Comprar planos →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan 4: Casa de Lujo Dos Niveles -->
+    <div class="plan-card fade-up" style="transition-delay:.3s">
+      <div class="plan-image">
+        <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&q=80" alt="Casa Lujo"/>
+        <span class="plan-badge">Exclusivo</span>
+      </div>
+      <div class="plan-content">
+        <h3 class="plan-name">Casa Ejecutiva Plus</h3>
+        <div class="plan-subtitle">Lote mínimo: 60m x 60m</div>
+        <div class="plan-specs">
+          <div class="spec">
+            <div class="spec-value">320m²</div>
+            <div class="spec-label">Área Construida</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">5</div>
+            <div class="spec-label">Habitaciones</div>
+          </div>
+          <div class="spec">
+            <div class="spec-value">4</div>
+            <div class="spec-label">Baños</div>
+          </div>
+        </div>
+        <p class="plan-description">Casa ejecutiva de dos niveles con master suite amplia, home office, zona social generosa y áreas de servicios. Acabados premium y espacios flexibles.</p>
+        <div class="plan-features">
+          <div class="feature">Todas las características incluidas</div>
+          <div class="feature">Especificaciones acabados premium</div>
+          <div class="feature">Detalles constructivos avanzados</div>
+          <div class="feature">Asesoría arquitectónica 12 meses</div>
+        </div>
+        <div class="plan-cta">
+          <a href="https://hotmart.com/es/cart/add?product=55667788" class="btn-hotmart" target="_blank">Comprar planos →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA SECTION -->
+  <div class="cta-section fade-up">
+    <h2>¿Necesitas un diseño personalizado?</h2>
+    <p>Si ninguno de nuestros modelos predefinidos se ajusta exactamente a tus necesidades, podemos crear un diseño 100% personalizado pensado en tu lote, estilo de vida y presupuesto.</p>
+    <a href="index.html#contact" class="btn-cta-primary">Solicitar asesoría arquitectónica</a>
+  </div>
+
+  <!-- FAQ -->
+  <div style="max-width:800px;margin:0 auto;padding:4rem 0;text-align:center">
+    <p style="font-family:var(--ff-serif);font-size:1.5rem;margin-bottom:2rem;color:var(--night)">Preguntas Frecuentes</p>
+    <div style="text-align:left">
+      <details style="margin-bottom:1.5rem;padding:1.5rem;background:var(--warm);border-radius:var(--r);cursor:pointer">
+        <summary style="font-weight:500;color:var(--night)">¿Qué incluye cada paquete de planos?</summary>
+        <p style="color:var(--stone);margin-top:1rem;line-height:1.7">Cada paquete incluye planos arquitectónicos completos en PDF de alta resolución, especificaciones técnicas detalladas, detalles constructivos, lista de materiales y un presupuesto estimado basado en precios actuales del mercado.</p>
+      </details>
+      <details style="margin-bottom:1.5rem;padding:1.5rem;background:var(--warm);border-radius:var(--r);cursor:pointer">
+        <summary style="font-weight:500;color:var(--night)">¿Puedo adaptar los planos a mi lote específico?</summary>
+        <p style="color:var(--stone);margin-top:1rem;line-height:1.7">Sí, los planos son una base sólida que puede ser adaptada. Algunos ajustes menores puedes hacerlos directamente. Para cambios mayores, ofrecemos asesoría personalizada.</p>
+      </details>
+      <details style="margin-bottom:1.5rem;padding:1.5rem;background:var(--warm);border-radius:var(--r);cursor:pointer">
+        <summary style="font-weight:500;color:var(--night)">¿Cuál es el tiempo de entrega?</summary>
+        <p style="color:var(--stone);margin-top:1rem;line-height:1.7">Recibirás acceso instantáneo a los planos después del pago. Los archivos se descargan directamente desde nuestra plataforma segura.</p>
+      </details>
+      <details style="margin-bottom:1.5rem;padding:1.5rem;background:var(--warm);border-radius:var(--r);cursor:pointer">
+        <summary style="font-weight:500;color:var(--night)">¿Hay garantía de satisfacción?</summary>
+        <p style="color:var(--stone);margin-top:1rem;line-height:1.7">Sí, ofrecemos 30 días de garantía. Si no estás completamente satisfecho, te devolvemos tu dinero sin preguntas.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;margin-bottom:3rem;max-width:1400px;margin-left:auto;margin-right:auto;padding:4rem 5%">
+    <div>
+      <div style="font-family:var(--ff-serif);font-size:1.3rem;margin-bottom:.5rem;color:var(--cream)">EA – Espacios Arquitectónicos</div>
+      <div style="font-size:.9rem;color:var(--gold);margin-bottom:1rem;letter-spacing:2px;text-transform:uppercase">Diseño. Construcción. Control.</div>
+      <p style="font-size:.85rem;color:rgba(248,245,239,.6);line-height:1.7">Oficina de diseño y construcción de vivienda campestre con sede en Medellín.</p>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Sitio</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="index.html" style="color:var(--cream)">Inicio</a></li>
+        <li style="margin-bottom:.75rem"><a href="proyectos.html" style="color:var(--cream)">Proyectos</a></li>
+        <li style="margin-bottom:.75rem"><a href="planos.html" style="color:var(--cream)">Planos Predefinidos</a></li>
+        <li style="margin-bottom:.75rem"><a href="blog.html" style="color:var(--cream)">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Contacto</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="mailto:contacto@espaciosarquitectonicos.com.co" style="color:var(--cream)">contacto@espaciosarquitectonicos.com.co</a></li>
+        <li style="margin-bottom:.75rem"><a href="tel:+573003204489" style="color:var(--cream)">+57 300 320 4489</a></li>
+        <li style="margin-bottom:.75rem;color:var(--cream)">Medellín, Antioquia</li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Síguenos</p>
+      <ul style="list-style:none;display:flex;gap:1rem">
+        <li><a href="#" style="color:var(--cream)">Instagram</a></li>
+        <li><a href="#" style="color:var(--cream)">LinkedIn</a></li>
+        <li><a href="#" style="color:var(--cream)">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(201,169,110,.15);padding-top:2rem;text-align:center;font-size:.85rem;color:rgba(248,245,239,.5);padding:2rem 5%">
+    <p>© 2026 EA – Espacios Arquitectónicos. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- ══════════════════ JS ══════════════════ -->
+<script>
+// Fade-up on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.12});
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

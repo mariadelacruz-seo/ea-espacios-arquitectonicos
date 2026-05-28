@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Proyectos · EA – Espacios Arquitectónicos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --night:#0D1A35;
+      --gold:#C9A96E;
+      --gold-light:#E2C896;
+      --cream:#F8F5EF;
+      --stone:#8B8680;
+      --warm:#F2EDE5;
+      --ff-serif:'Cormorant Garamond',Georgia,serif;
+      --ff-sans:'Jost',sans-serif;
+      --r:4px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-sans);background:var(--cream);color:var(--night);overflow-x:hidden}
+    img{display:block;max-width:100%;height:auto}
+    a{text-decoration:none;color:inherit}
+
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--night)}
+    ::-webkit-scrollbar-thumb{background:var(--gold)}
+
+    /* ── NAV ────────────────────────────────────────── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:0 5%;height:72px;
+      background:var(--night);box-shadow:0 2px 20px rgba(0,0,0,.3);
+    }
+    .nav-logo{display:flex;flex-direction:column;gap:2px}
+    .nav-logo a{font-family:var(--ff-serif);font-size:1.35rem;font-weight:500;color:var(--cream)}
+    .nav-logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .3s}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+    .nav-cta{
+      font-size:10px;letter-spacing:2px;text-transform:uppercase;
+      border:1px solid var(--gold);color:var(--gold);
+      padding:.55rem 1.25rem;border-radius:var(--r);
+      transition:background .3s,color .3s;cursor:pointer;
+    }
+    .nav-cta:hover{background:var(--gold);color:var(--night)}
+
+    /* ── PAGE HEADER ────────────────────────────────– */
+    .page-header{
+      padding-top:120px;padding-bottom:4rem;background:var(--night);text-align:center;color:var(--cream);
+      border-bottom:1px solid rgba(201,169,110,.2);
+    }
+    .page-header h1{
+      font-family:var(--ff-serif);font-size:clamp(2rem,5vw,3.5rem);
+      font-weight:300;margin-bottom:.5rem;
+    }
+    .page-header p{
+      font-size:.95rem;color:rgba(248,245,239,.6);max-width:600px;margin:0 auto;
+    }
+
+    /* ── PROJECTS GRID ────────────────────────────── */
+    .projects-container{
+      padding:6rem 5%;max-width:1400px;margin:0 auto;
+    }
+    .projects-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:3rem;
+      margin-bottom:4rem;
+    }
+    .project-card{
+      cursor:pointer;transition:transform .3s;position:relative;overflow:hidden;border-radius:var(--r);
+    }
+    .project-card:hover{transform:translateY(-8px)}
+    .project-image{
+      position:relative;width:100%;height:400px;overflow:hidden;border-radius:var(--r);
+    }
+    .project-image img{
+      width:100%;height:100%;object-fit:cover;transition:filter .3s;filter:grayscale(100%);
+    }
+    .project-card:hover .project-image img{filter:grayscale(0%);transform:scale(1.02)}
+    .project-info{
+      padding:2rem 0;
+    }
+    .project-type{
+      font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
+      margin-bottom:.5rem;display:flex;gap:.5rem}
+    .project-type span{display:inline-block}
+    .project-name{
+      font-family:var(--ff-serif);font-size:1.8rem;font-weight:400;
+      color:var(--night);margin-bottom:.5rem;
+    }
+    .project-description{
+      font-size:.9rem;color:var(--stone);line-height:1.7;margin-top:1rem;
+    }
+    .project-cta{
+      display:inline-block;margin-top:1rem;
+      font-size:.85rem;letter-spacing:2px;text-transform:uppercase;
+      color:var(--gold);transition:color .3s;
+    }
+    .project-cta:hover{color:var(--gold-light)}
+
+    /* ── MODAL ──────────────────────────────────────– */
+    .modal{
+      display:none;position:fixed;inset:0;z-index:200;
+      background:rgba(13,26,53,.95);justify-content:center;align-items:center;
+      opacity:0;transition:opacity .3s;
+    }
+    .modal.active{display:flex;opacity:1}
+    .modal-content{
+      position:relative;max-width:90vw;max-height:90vh;overflow-y:auto;
+      background:var(--cream);border-radius:var(--r);
+    }
+    .modal-close{
+      position:absolute;top:2rem;right:2rem;font-size:1.5rem;
+      background:var(--gold);color:var(--night);width:40px;height:40px;
+      border-radius:50%;border:none;cursor:pointer;z-index:201;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .modal-images{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;
+      padding:3rem;
+    }
+    .modal-image{
+      width:100%;height:250px;overflow:hidden;border-radius:var(--r);
+      cursor:pointer;transition:transform .3s;
+    }
+    .modal-image:hover{transform:scale(1.05)}
+    .modal-image img{width:100%;height:100%;object-fit:cover}
+    .modal-details{
+      padding:3rem;
+      background:var(--night);color:var(--cream);
+    }
+    .modal-title{
+      font-family:var(--ff-serif);font-size:2.5rem;font-weight:300;
+      margin-bottom:1rem;
+    }
+    .modal-subtitle{
+      font-size:.85rem;letter-spacing:2px;text-transform:uppercase;
+      color:var(--gold);margin-bottom:2rem;display:flex;gap:.5rem}
+    .modal-text{
+      font-size:.95rem;color:rgba(248,245,239,.7);line-height:1.85;
+    }
+    .modal-text p+p{margin-top:1.5rem}
+
+    /* ── FADE ANIMATIONS ────────────────────────────– */
+    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s, transform .7s}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+
+    /* ── FOOTER ────────────────────────────────────– */
+    footer{background:var(--night);border-top:1px solid rgba(201,169,110,.2);padding:4rem 5%;color:var(--cream)}
+    footer a{color:var(--cream);transition:color .3s}
+    footer a:hover{color:var(--gold)}
+
+    /* ── RESPONSIVE ────────────────────────────────– */
+    @media(max-width:768px){
+      .projects-grid{grid-template-columns:1fr}
+      .project-image{height:300px}
+      .modal-images{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+      .modal-title{font-size:1.8rem}
+      .page-header{padding-top:100px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html" style="font-family:var(--ff-serif);font-size:1.35rem;font-weight:500;color:var(--cream)">EA</a>
+    <div class="nav-logo-sub">Espacios</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="proyectos.html" class="active">Proyectos</a></li>
+    <li><a href="planos.html">Planos Predefinidos</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Contacto</a>
+</nav>
+
+<!-- ══════════════════ PAGE HEADER ══════════════════ -->
+<div class="page-header">
+  <h1>Proyectos Destacados</h1>
+  <p>Cada casa tiene una historia. Aquí compartimos las de algunos de nuestros clientes, proyectos que reflejan escucha, contextualización y carácter.</p>
+</div>
+
+<!-- ══════════════════ PROJECTS ══════════════════ -->
+<div class="projects-container">
+  <div class="projects-grid">
+    <!-- Casa en la Ladera -->
+    <div class="project-card fade-up" onclick="openModal('modal-ladera')">
+      <div class="project-image">
+        <img src="./images/Casa-en-la-ladera-01.png" alt="Casa en la Ladera"/>
+      </div>
+      <div class="project-info">
+        <div class="project-type">
+          <span>Vivienda Unifamiliar</span>
+          <span>·</span>
+          <span>Pendiente</span>
+          <span>·</span>
+          <span>San Cristóbal</span>
+        </div>
+        <h3 class="project-name">Casa en la Ladera</h3>
+        <p class="project-description">Las luces de la ciudad desplegadas al fondo. Un horizonte urbano que no podía sacrificarse. La solución fue no tocar la ladera, sino volar la terraza hacia el vacío como una plataforma de observación.</p>
+        <div class="project-cta">Ver proyecto →</div>
+      </div>
+    </div>
+
+    <!-- Casa SP -->
+    <div class="project-card fade-up" style="transition-delay:.1s" onclick="openModal('modal-sp')">
+      <div class="project-image">
+        <img src="./images/Casa-SP-01.png" alt="Casa SP"/>
+      </div>
+      <div class="project-info">
+        <div class="project-type">
+          <span>Vivienda Vacacional</span>
+          <span>·</span>
+          <span>Clima Cálido</span>
+          <span>·</span>
+          <span>Sopetrán</span>
+        </div>
+        <h3 class="project-name">Casa SP</h3>
+        <p class="project-description">El calor fue la condición de partida. Una casa de descanso en clima tropical tiene que respirar antes que cualquier cosa. Los parales verticales de madera no son un cerramiento: son un filtro.</p>
+        <div class="project-cta">Ver proyecto →</div>
+      </div>
+    </div>
+
+    <!-- Casa El Refugio -->
+    <div class="project-card fade-up" style="transition-delay:.2s" onclick="openModal('modal-refugio')">
+      <div class="project-image">
+        <img src="./images/Casa-el-refugio-01.png" alt="Casa El Refugio"/>
+      </div>
+      <div class="project-info">
+        <div class="project-type">
+          <span>Vivienda Unifamiliar</span>
+          <span>·</span>
+          <span>Condominio</span>
+          <span>·</span>
+          <span>Llano Grande</span>
+        </div>
+        <h3 class="project-name">Casa El Refugio</h3>
+        <p class="project-description">La cubierta a dos aguas con alturas generosas define el carácter del proyecto desde la primera mirada. El patio posterior es donde esta casa vive realmente, con BBQ, jacuzzi y conexión directa a la cocina.</p>
+        <div class="project-cta">Ver proyecto →</div>
+      </div>
+    </div>
+
+    <!-- Casa San Cristóbal -->
+    <div class="project-card fade-up" style="transition-delay:.3s" onclick="openModal('modal-sancristobal')">
+      <div class="project-image">
+        <img src="./images/Casa-San-Cristobal-01.png" alt="Casa San Cristóbal"/>
+      </div>
+      <div class="project-info">
+        <div class="project-type">
+          <span>Vivienda Unifamiliar</span>
+          <span>·</span>
+          <span>Un Nivel</span>
+          <span>·</span>
+          <span>San Cristóbal</span>
+        </div>
+        <h3 class="project-name">Casa San Cristóbal</h3>
+        <p class="project-description">El cliente quería una casa que se sintiera parte del jardín. Una vivienda extendida horizontalmente donde la vida interior y exterior no tuvieran un límite claro. Puertas corredizas desaparecen para borrar el umbral.</p>
+        <div class="project-cta">Ver proyecto →</div>
+      </div>
+    </div>
+
+    <!-- Casa MT -->
+    <div class="project-card fade-up" style="transition-delay:.4s" onclick="openModal('modal-mt')">
+      <div class="project-image">
+        <img src="./images/Casa-MT-01.png" alt="Casa MT"/>
+      </div>
+      <div class="project-info">
+        <div class="project-type">
+          <span>Vivienda Unifamiliar</span>
+          <span>·</span>
+          <span>Patio Central</span>
+          <span>·</span>
+          <span>Zona Campestre</span>
+        </div>
+        <h3 class="project-name">Casa MT</h3>
+        <p class="project-description">Una casa en L que se desarrolla en torno al patio, donde la piscina, el jacuzzi y la sala exterior son el centro de la vida familiar. La fachada principal es casi hermética, guardando adentro todo lo que tiene.</p>
+        <div class="project-cta">Ver proyecto →</div>
+      </div>
+    </div>
+
+    <!-- Casa JT -->
+    <div class="project-card fade-up" style="transition-delay:.5s" onclick="openModal('modal-jt')">
+      <div class="project-image">
+        <img src="./images/Casa-JT-01.png" alt="Casa JT"/>
+      </div>
+      <div class="project-info">
+        <div class="project-type">
+          <span>Vivienda Unifamiliar</span>
+          <span>·</span>
+          <span>Dos Niveles</span>
+          <span>·</span>
+          <span>San Cristóbal</span>
+        </div>
+        <h3 class="project-name">Casa JT</h3>
+        <p class="project-description">El cliente quería una casa con carácter. La fachada combina ladrillo blanco encalado con volúmenes en piedra gris grafito oscuro. Esa tensión entre lo claro y lo oscuro le da identidad propia sin ornamentos.</p>
+        <div class="project-cta">Ver proyecto →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODALES ══════════════════ -->
+
+<!-- Modal Casa en la Ladera -->
+<div id="modal-ladera" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modal-ladera')">✕</button>
+    <div class="modal-images">
+      <div class="modal-image"><img src="./images/Casa-en-la-ladera-01.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-en-la-ladera-02.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-en-la-ladera-03.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-en-la-ladera-04.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-en-la-ladera-05.png"/></div>
+    </div>
+    <div class="modal-details">
+      <h2 class="modal-title">Casa en la Ladera</h2>
+      <div class="modal-subtitle">Vivienda Unifamiliar · Pendiente · San Cristóbal</div>
+      <div class="modal-text">
+        <p>Las luces de la ciudad desplegadas al fondo, un horizonte urbano que no podía sacrificarse. El problema era que casi todo el lote era pendiente, y una solución convencional hubiera enterrado esa vista.</p>
+        <p>La decisión fue no tocar la ladera. En cambio, la terraza vuela hacia el vacío en voladizo, suspendida sobre la pendiente como una plataforma de observación. El vidrio templado de la baranda no interrumpe la visual —la enmarca. La piedra natural en el muro lateral aparece sin pulir, tosca y honesta, recordando que esta casa está clavada en una montaña.</p>
+        <p>Una vivienda que transforma su mayor limitación —la topografía— en su mayor virtud. La naturaleza de la pendiente se convierte en el protagonista silencioso de cada momento que se vive en esa casa.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Casa SP -->
+<div id="modal-sp" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modal-sp')">✕</button>
+    <div class="modal-images">
+      <div class="modal-image"><img src="./images/Casa-SP-01.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-SP-02.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-SP-03.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-SP-04.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-SP-05.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-SP-06.png"/></div>
+    </div>
+    <div class="modal-details">
+      <h2 class="modal-title">Casa SP</h2>
+      <div class="modal-subtitle">Vivienda Vacacional · Clima Cálido · Sopetrán, Antioquia</div>
+      <div class="modal-text">
+        <p>El calor era la condición de partida y también la que definió cada decisión de diseño. Una casa de descanso en clima tropical tiene que respirar antes de cualquier otra cosa, y este proyecto lo resuelve desde la piel hacia adentro.</p>
+        <p>Los parales verticales de madera que conforman los cerramientos no son un cerramiento en el sentido estricto: son un filtro. El viento los atraviesa constantemente, los espacios nunca se cierran del todo y la brisa que corre entre los árboles termina siendo parte del ambiente interior.</p>
+        <p>La paleta es deliberadamente simple: blanco, beige, madera natural. Colores que no pelean con el sol sino que lo absorben y lo distribuyen. Las grandes vidrieras conectan la sala, el comedor y la cocina en un solo gesto horizontal que abre la casa hacia la terraza y la piscina.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Casa El Refugio -->
+<div id="modal-refugio" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modal-refugio')">✕</button>
+    <div class="modal-images">
+      <div class="modal-image"><img src="./images/Casa-el-refugio-01.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-el-refugio-02.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-el-refugio-03.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-el-refugio-04.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-el-refugio-05.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-el-refugio-06.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-el-refugio-07.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-el-refugio-08.png"/></div>
+    </div>
+    <div class="modal-details">
+      <h2 class="modal-title">Casa El Refugio</h2>
+      <div class="modal-subtitle">Vivienda Unifamiliar · Condominio · Llano Grande, Antioquia</div>
+      <div class="modal-text">
+        <p>La cubierta a dos aguas con alturas generosas define el carácter del proyecto desde la primera mirada. Las carpinterías negras definen los vanos con precisión, y el vestíbulo de acceso —enmarcado por el volumen central con su gran lucernario— anuncia desde la entrada la altura interior que caracteriza todo el proyecto.</p>
+        <p>En la parte posterior, el proyecto cambia de registro. El patio —con BBQ, jacuzzi y conexión directa a la cocina— es donde esta casa vive realmente. El salón principal se abre por completo hacia ese espacio, y el límite entre adentro y afuera se vuelve irrelevante.</p>
+        <p>Cada rincón fue pensado para la comodidad y la vida en familia, con una circulación clara y espacios versátiles que se adaptan a diferentes momentos del día.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Casa San Cristóbal -->
+<div id="modal-sancristobal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modal-sancristobal')">✕</button>
+    <div class="modal-images">
+      <div class="modal-image"><img src="./images/Casa-San-Cristobal-01.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-San-Cristobal-02.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-San-Cristobal-03.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-San-Cristobal-04.png"/></div>
+    </div>
+    <div class="modal-details">
+      <h2 class="modal-title">Casa San Cristóbal</h2>
+      <div class="modal-subtitle">Vivienda Unifamiliar · Un Nivel · San Cristóbal</div>
+      <div class="modal-text">
+        <p>El cliente quería una casa que se sintiera parte del jardín. Una vivienda de un solo nivel, extendida horizontalmente sobre el terreno plano, donde la vida interior y exterior no tuvieran un límite claro.</p>
+        <p>El reto era lograr esa apertura total sin perder la escala íntima que hace habitable una casa campestre. La respuesta fue una cubierta plana que vuela generosamente sobre la terraza posterior, creando una zona de sombra permanente que invita a estar afuera.</p>
+        <p>Las puertas corredizas de piso a techo desaparecen para borrar el umbral entre la sala y el jardín. El resultado es una casa que cambia de carácter: de día desaparece entre los árboles y al caer la tarde, cuando el interior se enciende, se convierte en el centro del jardín que la rodea.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Casa MT -->
+<div id="modal-mt" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modal-mt')">✕</button>
+    <div class="modal-images">
+      <div class="modal-image"><img src="./images/Casa-MT-01.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-MT-02.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-MT-03.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-MT-04.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-MT-05.png"/></div>
+    </div>
+    <div class="modal-details">
+      <h2 class="modal-title">Casa MT</h2>
+      <div class="modal-subtitle">Vivienda Unifamiliar · Un Nivel · Patio Central · Zona Campestre</div>
+      <div class="modal-text">
+        <p>Una casa en L se desarrolla en torno al patio, donde la piscina, el jacuzzi, la sala exterior y el jardín son el centro de la vida familiar. Los ventanales piso-techo desaparecen para dejar que el patio entre al salón.</p>
+        <p>El reto era lograr esa interioridad en el exterior. La fachada principal es casi hermética: un volumen blanco limpio con vanos precisos, que guarda hacia adentro todo lo que tiene. El muro lateral en piedra sirve como eje, marcando la circulación y separando el parqueadero de la casa.</p>
+        <p>El resultado es una composición balanceada que protege la privacidad mientras maximiza la conexión con el jardín interior, creando un espacio de retiro perfecto para la familia.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Casa JT -->
+<div id="modal-jt" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modal-jt')">✕</button>
+    <div class="modal-images">
+      <div class="modal-image"><img src="./images/Casa-JT-01.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-JT-01A.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-JT-02.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-JT-02A.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-JT-03.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-JT-03A.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-JT-04.png"/></div>
+      <div class="modal-image"><img src="./images/Casa-JT-05.png"/></div>
+    </div>
+    <div class="modal-details">
+      <h2 class="modal-title">Casa JT</h2>
+      <div class="modal-subtitle">Vivienda Unifamiliar · Dos Niveles · San Cristóbal</div>
+      <div class="modal-text">
+        <p>El cliente quería una casa con carácter. El reto era trabajar con dos niveles sin que la casa se volviera pesada.</p>
+        <p>La fachada combina ladrillo blanco encalado con volúmenes en piedra gris grafito oscuro que emergen como planos flotantes sobre el nivel bajo. Esa tensión entre lo claro y lo oscuro le da a la casa una identidad propia sin necesidad de ornamentos.</p>
+        <p>El ladrillo blanco aparece también en los muros interiores, sin revestir, aportando textura y calidez sin recurrir a la madera como único recurso. Cada material fue elegido con cuidado para contribuir a la narrativa visual de la casa, creando un espacio que se siente contemporáneo pero enraizado en su contexto arquitectónico.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;margin-bottom:3rem;max-width:1400px;margin-left:auto;margin-right:auto;padding:4rem 5%">
+    <div>
+      <div style="font-family:var(--ff-serif);font-size:1.3rem;margin-bottom:.5rem;color:var(--cream)">EA – Espacios Arquitectónicos</div>
+      <div style="font-size:.9rem;color:var(--gold);margin-bottom:1rem;letter-spacing:2px;text-transform:uppercase">Diseño. Construcción. Control.</div>
+      <p style="font-size:.85rem;color:rgba(248,245,239,.6);line-height:1.7">Oficina de diseño y construcción de vivienda campestre con sede en Medellín.</p>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Sitio</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="index.html" style="color:var(--cream)">Inicio</a></li>
+        <li style="margin-bottom:.75rem"><a href="proyectos.html" style="color:var(--cream)">Proyectos</a></li>
+        <li style="margin-bottom:.75rem"><a href="planos.html" style="color:var(--cream)">Planos Predefinidos</a></li>
+        <li style="margin-bottom:.75rem"><a href="blog.html" style="color:var(--cream)">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Contacto</p>
+      <ul style="list-style:none">
+        <li style="margin-bottom:.75rem"><a href="mailto:contacto@espaciosarquitectonicos.com.co" style="color:var(--cream)">contacto@espaciosarquitectonicos.com.co</a></li>
+        <li style="margin-bottom:.75rem"><a href="tel:+573003204489" style="color:var(--cream)">+57 300 320 4489</a></li>
+        <li style="margin-bottom:.75rem;color:var(--cream)">Medellín, Antioquia</li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:500;margin-bottom:1rem;color:var(--gold);text-transform:uppercase;font-size:.9rem">Síguenos</p>
+      <ul style="list-style:none;display:flex;gap:1rem">
+        <li><a href="#" style="color:var(--cream)">Instagram</a></li>
+        <li><a href="#" style="color:var(--cream)">LinkedIn</a></li>
+        <li><a href="#" style="color:var(--cream)">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(201,169,110,.15);padding-top:2rem;text-align:center;font-size:.85rem;color:rgba(248,245,239,.5);padding:2rem 5%">
+    <p>© 2026 EA – Espacios Arquitectónicos. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- ══════════════════ JS ══════════════════ -->
+<script>
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+window.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal')) {
+    e.target.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+});
+
+// Fade-up on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.12});
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
